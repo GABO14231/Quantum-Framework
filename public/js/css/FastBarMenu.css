@@ -1,0 +1,121 @@
+:host{
+    --bgColorMenu : white;
+    --borderRadius : 0.4em;
+}
+.FastBarMenu{
+    display : flex;
+    position:absolute;
+    left: 0px;
+    top:0px;
+    height : 30px;
+    width: 100%;
+    max-width : 100%;
+    line-height: 30px;
+    /* background-color : rgb(8, 143, 136); */
+    border-radius: var(--borderRadius);
+    background-color : var(--bgColorMenu);
+    border : 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.FastPanelSubMenu{
+    display : grid;
+    position : absolute;
+    background-color : rgba(0,0,0,0);
+    border-style : solid;
+    border-radius : var(--borderRadius);
+    border-width : 1px;
+    border-color : rgba(0,0,0,0.3);
+    box-shadow : rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    overflow: hidden;
+}
+
+.FastOptionSM{
+    display : flex;
+    background-color : rgba(0,0,0,0);
+    position : relative;
+    padding-left : 5px;
+    padding-right : 5px;
+    align-items: right;
+}
+
+.FastTextOption{
+    display: flex;
+    font-family : Trebuchet MS;
+    font-size : 12px;
+    font-weight: bold;
+    align-items : left;
+    justify-content : left;
+    position : relative;
+    border-radius : var(--borderRadius);
+    text-align: left;
+    justify-content: left;
+}
+
+.FastOptionSubMenuChild{
+    display:grid;
+    color : rgb(8, 143, 136);
+    position : absolute;
+    left : 100%;
+    background-color: rgba(0,0,0,0);
+    border-style : solid;
+    border-radius : var(--borderRadius);
+    border-width : 1px;
+    border-color : rgba(0,0,0,0.3);
+    box-shadow : rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    font-family : Trebuchet MS;
+    font-size : 12px;
+    font-weight: bold;
+    overflow: hidden;
+
+}
+.FastOptionMenu{
+    display:flex;
+    color : rgb(8, 143, 136);
+    font-family : Trebuchet MS;
+    font-size : 12px;
+    font-weight: bold;
+    align-items : left;
+    justify-content : left;
+    padding: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+}
+
+.FastOptionSM:hover{
+    background-color: rgb(11, 99, 102);
+    cursor: pointer;
+    color:white;
+    animation-name: showover;
+    animation-duration: 0.5s; 
+    animation-delay: 0s;
+    animation-fill-mode: both;
+}
+.FastOptionMenu:hover{
+    background-color: rgba(9, 92, 88, 0.1);
+    border-radius:var(--borderRadius) ;
+    cursor:pointer;
+    animation-name: showshadow;
+    animation-duration: 0.8s; 
+    animation-delay: 0s;
+    animation-fill-mode: both;
+}
+
+@keyframes showshadow{
+    from{
+        background-color:rgba(0,0,0,0);
+    }
+    to{
+        background-color: rgba(9, 92, 88, 0.1);
+    }
+}
+@keyframes showover{
+    from{
+        background-color:rgba(0,0,0,0);
+    }
+    to{
+        background-color: rgba(9, 92, 88);
+    }
+}

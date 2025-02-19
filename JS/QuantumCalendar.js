@@ -1,4 +1,0 @@
-class Calendar extends Quantum
-{
-
-}

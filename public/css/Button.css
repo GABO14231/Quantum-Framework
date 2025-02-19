@@ -1,0 +1,31 @@
+
+.Button{
+    display : flex;
+    width : 100px;
+    height : 40px;
+    line-height: 40px;
+    background-color : rgb(8, 143, 136);
+    color : white;
+    font-family : Trebuchet MS;
+    font-size : 16px;
+    align-items : center;
+    justify-content : center;
+    border : 0px;
+    border-radius: 1em;
+    transition: 0.1s box-shadow;
+}
+
+.Button:active {
+    transform: scale(0.98);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    background-color: rgba(7, 102, 75, 0.911);
+}
+   
+.Button:hover {
+    transition: all 0.2s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+    color : orange;
+    cursor:pointer;
+}
+.Button:disabled{opacity : 0.3;}
+.Button:enabled{opacity : 1;}

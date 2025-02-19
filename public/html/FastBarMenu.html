@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <script type="module" src="../js/com/Fast.js"></script>
+        <link rel="icon" href="../images/icons/favicon.png" sizes="32x32" type="image/png">
+    </head>
+    <body>
+        <script>
+            let fastInit = async () => {
+            let bm = await fast.createInstance("FastBarMenu", {
+                    'id':'MyFastBarMenuJS', 
+                    'style' : {
+                        'position' : 'absolute',
+                        'left' : '20px',
+                        'top' : '20px',
+                        'width' : '357px',
+                        'height' : '40px'
+                    }
+                    // 'coloricon' : 'darkgray', 
+                });
+                bm.built = async ()=>{
+                    // console.log('Componente construido...');
+                    bm.addNode({
+                        'id':'op1',
+                        'text' :'Opcion 1',
+                        'funct':()=>{console.log('opcion 1');},
+                        'iconname' : 'edit',
+                        // 'coloricon' : 'rgb(8, 143, 136)'
+                    })
+                    .addNode({
+                        'id':'op2',                        
+                        'text' :'Opcion 2',
+                        'funct':()=>{console.log('opcion 2')},
+                        'iconname' : 'config',
+                        // 'coloricon' : 'black'
+                    })
+                    .addNode({
+                        'id':'op3',
+                        'text' :'Opcion 3',
+                        'funct':()=>{console.log('opcion 3')}
+                    })
+                    .addNode({
+                        'id':'op4',
+                        'text' :'Opcion 4',
+                        'funct':()=>{console.log('opcion 4')},
+                        'iconname' : 'user',
+                    })
+                    .addNode({
+                        'id' :'sm1',
+                        'parentId' : 'op1',
+                        'iconname':'user',
+                        'text' : 'user',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm2',
+                        'parentId' : 'op1',
+                        'iconname':'edit',
+                        'text' : 'editar',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm3',
+                        'parentId' : 'op2',
+                        'iconname':'config',
+                        'text' : 'configurar',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm4',
+                        'parentId' : 'op2',
+                        'iconname':'users',
+                        'text' : 'Mantenimiento de usuarios',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm5',
+                        'parentId' : 'op2',
+                        'iconname':'info',
+                        'text' : 'Información del sistema',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm6',
+                        'parentId' : 'op3',
+                        'iconname':'home',
+                        'text' : 'Iniciar',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm7',
+                        'parentId' : 'op3',
+                        'iconname':'world',
+                        'text' : 'Conectar',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm8',
+                        'parentId' : 'op4',
+                        'iconname':'zoomplus',
+                        'text' : 'Agrandar espacio entre opciones',
+                        'funct' : ()=>{alert('Agrandar..!')}
+                    })
+                    .addNode({
+                        'id' :'sm9',
+                        'parentId' : 'op4',
+                        'iconname':'zoomminus',
+                        'text' : 'disminuir',
+                        'funct' : ()=>{}
+                    })
+                    .addNode({
+                        'id' :'sm10',
+                        'parentId' : 'sm9',
+                        'iconname':'delete',
+                        'text' : 'Borrar',
+                        'funct' : ()=>{alert('Borrar')}
+                    })
+                    .addNode({
+                        'id' :'sm11',
+                        'parentId' : 'sm9',
+                        'iconname':'calendar',
+                        'text' : 'Definición de fecha',
+                        'funct' : ()=>{alert('calendar')}
+                    })
+
+                    await bm.render();
+                    // await bm.renderMenu([
+                    //     {
+                    //         'id':'op2',                        
+                    //         'text' :'Opcion 2',
+                    //         'funct':()=>{console.log('opcion 2')},
+                    //         'iconname' : 'config',
+                    //         // 'coloricon' : 'black'
+                    //     },
+                    //     {
+                    //         'id':'op4',
+                    //         'text' :'Opcion 4',
+                    //         'funct':()=>{console.log('opcion 3')},
+                    //         'iconname' : 'user',
+                    //     }
+                    // ]);
+                }
+                bm.addToBody();
+            };
+        </script>
+    </body>
+</html>
