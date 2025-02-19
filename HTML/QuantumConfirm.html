@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script src="../JS/Quantum.js" type="module"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const d = await quantum.createInstance("QuantumConfirm",
+                {
+                    id: 'dialogJS',
+                    dialogTitle: 'Confirm Action',
+                    iconName: 'warning',
+                    dialogText: 'Are you sure you want to proceed with this action?',
+                    // events: {confirm: () => {console.log("Confirmed");}, cancel: () => {console.log("Cancelled");},}
+                });
+
+                d.built = () => {d.show(); console.log('Built Component!');};
+                d.addToBody();
+                d.addEventListener("confirm", () => {console.log("Confirmed");},);
+                d.addEventListener("cancel", () => {console.log("Cancelled");});
+
+                const e = quantum.getInstance("dialogHTML");
+                e.addEventListener("confirm", () => {console.log("Confirmed HTML");},);
+                e.addEventListener("cancel", () => {console.log("Cancelled HTML");});
+            };
+        </script>
+        <quantum-confirm id="dialogHTML" dialogTitle="HTML Dialog" dialogText="Confirm or Cancel, via HTML!"
+            style="width: 800px"></quantum-confirm>
+    </body>
+</html>

@@ -1,0 +1,178 @@
+:host {--QuantumComboHeightOption: 35px;}
+
+.QuantumCombo
+{
+    display: grid;
+    position: absolute;
+    border-color: rgba(0, 0, 0, 0.4);
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    border-style: solid;
+    border-radius: 1em;
+    border-width: 1px;
+    height: 40px;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.QuantumComboInputContainer
+{
+    position: absolute;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0);
+    width: 99%;
+    height: 100%;
+    margin-right: 10px;
+    align-items: center;
+    justify-content: left;
+}
+
+.QuantumComboPanel
+{
+    position: absolute;
+    top: 100%;
+    background-color: white;
+    border-bottom: #000;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5em;
+    border-color: rgba(0, 0, 0, 0.4);
+    display: grid;
+    visibility: hidden;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    grid-template-columns: 1fr;
+    z-index: 1;
+}
+
+.QuantumComboOption
+{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: var(--QuantumComboHeightOption);
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
+    padding: 5px;
+}
+
+.QuantumComboDivText
+{
+    display: flex;
+    position: absolute;
+    left: 30px;
+    align-items: center;
+    align-content: center;
+    width: 90%;
+}
+
+.QuantumComboDivCheck
+{
+    display: flex;
+    position: relative;
+    margin-left: 5px;
+    margin-bottom: 18px;
+    align-items: center;
+    width: 23px;
+}
+
+.QuantumComboOption:hover
+{
+    background-color: rgb(47, 165, 151);
+    color: white;
+    cursor: pointer;
+}
+
+.QuantumComboInput
+{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.QuantumComboButtonUp
+{
+    position: relative;
+    border-color: black;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+    animation-duration: 0.1s;
+    animation-delay: 0s;
+    animation-fill-mode: both;
+}
+
+.QuantumLabel
+{
+    position: absolute;
+    color: rgba(0, 0, 0, 0.3);
+    margin-left: 10px;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-fill-mode: both;
+}
+
+.QuantumComboButtonDown
+{
+    border-color: black;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid #000;
+    margin-right: 5px;
+    animation-duration: 0.1s;
+    animation-delay: 0s;
+    animation-fill-mode: both;
+}
+
+.QuantumComboButtonDown:hover {cursor: pointer;}
+
+@keyframes animationDown
+{
+    from
+    {
+        border-bottom: 10px solid #000;
+        border-top: 0px;
+    }
+    to
+    {
+        border-top: 10px solid #000;
+        border-bottom: 0px;
+    }
+}
+
+@keyframes animationUp
+{
+    from
+    {
+        border-top: 10px solid #000;
+        border-bottom: 0px;
+    }
+    to
+    {
+        border-bottom: 10px solid #000;
+        border-top: 0px;
+    }
+}
+
+@keyframes labelUp
+{
+    from {top: calc((var(--QuantumComboHeightOption) / 2));}
+    to {top: calc((var(--QuantumComboHeightOption) / 2) * -1);}
+}
+
+@keyframes labelDow
+{
+    from {top: calc((var(--QuantumComboHeightOption) / 2) * -1);}
+    to {top: calc((var(--QuantumComboHeightOption) / 2));}
+}

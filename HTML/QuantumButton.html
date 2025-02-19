@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const b = await quantum.createInstance("QuantumButton",
+                {
+                    id: 'Button1',
+                    caption: 'Cancel',
+                    events: {click: () => console.log(`Clicked on ${b.caption}!`)}
+                });
+
+                b.built = () =>
+                {
+                    console.log('Built Component!');
+                    b.addEventListener('changeCaption', () => console.log("Text changed to: " + b.caption));
+                    b.caption = "New Text";
+                };
+                b.addToBody();
+            };
+        </script>
+        <quantum-button id = "MyQuantumButtonHTML" caption = "Accept" style="background-color: green"
+        onclick="console.log(`Clicked on ${caption}!`)"></quantum-button>
+    </body>
+</html>

@@ -1,0 +1,79 @@
+.QuantumConfirm
+{
+    position: relative;
+    display: grid;
+    background-color: white;
+    border-style: solid;
+    border-color: rgba(100, 100, 100, 0.5);
+    border-width: 1px;
+    width: 500px;
+    height: 450px;
+    margin-bottom: 20px;
+    border-radius: 1em;
+    box-shadow: 4px 4px 5px -2px rgba(33, 33, 33, 0.5);
+    grid-template-rows: 0.15fr 0.7fr 0.15fr;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    animation-name: show;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.Title
+{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 30px;
+    color: black;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0px;
+}
+
+.BodyDialog
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0px;
+}
+
+.warningIcon
+{
+    width: 150px;
+    height: 150px;
+    margin-bottom: 5px;
+}
+
+.confirmText
+{
+    font-size: 30px;
+    text-align: center;
+}
+
+.Footer
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0px;
+}
+
+@keyframes show
+{
+    from {opacity: 0%;}
+    to {opacity: 100%;}
+}
+
+@keyframes hide
+{
+    from {opacity: 100%;}
+    to {opacity: 0%;}
+}

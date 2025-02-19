@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                quantum.fsw = ()=>
+                {
+                    const sw2 = quantum.getInstance("MyQuantumSw");
+                    if (sw2.sts)
+                        console.log('On');
+                    else
+                        console.log('Off');
+                }
+                const sw = await quantum.createInstance("QuantumSwitch",
+                {
+                    'id':'sw1',
+                    'events' : {'click': () => {if(sw.sts) console.log('On'); else console.log('Off');}},
+                    // 'disabled' : true
+                });
+                sw.built = () => {console.log('Built Component!');}
+                sw.addToBody();
+            };
+        </script>
+        <quantum-switch id = "MyQuantumSw" sts = true  onclick = 'quantum.fsw()'></quantum-switch>
+    </body>
+</html>

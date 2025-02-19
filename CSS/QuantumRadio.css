@@ -1,0 +1,58 @@
+.QuantumRadioPanel
+{
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    gap: 10px;
+}
+
+.QuantumRadioCaption
+{
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 14px;
+    font-family: 'Segoe UI', sans-serif;
+    color: black;
+    padding-left: 5px;
+}
+
+.QuantumRadioCaption:hover {cursor: pointer;}
+
+.QuantumRadioCaptionSelected
+{
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 14px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #4A90E2;
+    padding-left: 5px;
+}
+
+.QuantumExtRadio
+{
+    display: flex;
+    width: 20px;
+    height: 20px;
+    background-color: #4A90E2;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    border-style: solid;
+    border-color: #4A90E2;
+    border-width: 1px;
+}
+
+.QuantumIntRadioSelected
+{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.QuantumIntRadio
+{
+    width: 10px;
+    height: 10px;
+    background-color: rgba(25, 182, 129, 0.4);
+    border-radius: 50%;
+    cursor: pointer;
+}

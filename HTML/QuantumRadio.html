@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const c = await quantum.createInstance("QuantumRadio",
+                {
+                    id:'QuantumRadio1', 
+                    caption : 'JS Button 1',
+                    group : 'Group1',
+                    events: {click: () => console.log(`Clicked on ${c.caption}!`)},
+                    //checked: true
+                });
+                const d = await quantum.createInstance("QuantumRadio",
+                {
+                    id:'QuantumRadio2', 
+                    caption : 'JS Button 2',
+                    group : 'Group1',
+                    events: {click: () => console.log(`Clicked on ${d.caption}!`)}
+                });
+                c.addToBody();
+                d.addToBody();
+            }
+        </script>
+        <quantum-radio id = "htmlRadio" group = "Group1" caption = "HTML Button" checked = true
+        onclick="console.log(`Clicked on ${caption}!`)"></quantum-radio>
+    </body>
+</html>

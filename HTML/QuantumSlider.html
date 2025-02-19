@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const c = await quantum.createInstance("QuantumSlider",
+                {
+                    id: 'jsSlider',
+                    images: "../Images/image1.png,../Images/image2.png",
+                    captions: "C, JavaScript",
+                    autoplay: true
+                });
+
+                c.built = () => {c.show(); console.log('Built Component!');};
+                c.addToBody();
+            }
+        </script>
+        <quantum-slider id="htmlSlider" images="../Images/warning.png,../Images/warning.svg"
+            captions="PNG, SVG">
+        </quantum-slider>
+    </body>
+</html>
