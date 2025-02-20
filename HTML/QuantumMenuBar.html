@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Bar Component</title>
+    <link rel="stylesheet" href="menu-bar.css">
+</head>
+<body>
+    <h1>Menu Bar Example</h1>
+
+    <menu-bar>
+        <menu-item title="About Us"></menu-item>
+        <menu-item title="Products">
+            <submenu-item title="House"></submenu-item>
+            <submenu-item title="Kitchen"></submenu-item>
+            <submenu-item title="Bedroom"></submenu-item>
+            <submenu-item title="Bathroom"></submenu-item>
+            <submenu-item title="Compare"></submenu-item>
+        </menu-item>
+        <menu-item title="Account">
+            <submenu-item title="My Profile"></submenu-item>
+            <submenu-item title="Payment Methods"></submenu-item>
+            <submenu-item title="Order History"></submenu-item>
+        </menu-item>
+        <menu-item title="Cart"></menu-item>
+    </menu-bar>
+
+    <script src="menu-bar.js" type="module"></script>
+</body>
+</html>
