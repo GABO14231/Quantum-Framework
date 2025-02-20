@@ -1,0 +1,16 @@
+.tree-container ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.tree-container li {
+    margin: 5px 0;
+}
+
+.tree-container label {
+    cursor: pointer;
+}
+
+.tree-container input[type="checkbox"] {
+    margin-right: 5px;
+}
