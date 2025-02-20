@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+                const quantumInit = async () =>
+                {
+                    const b = await quantum.createInstance("QuantumExchange",
+                    {
+                        id: 'ExchangeList JS',
+                    });
+                    b.built = () => {console.log('Built Component!');};
+                    b.addToBody();
+                };
+        </script>
+    </body>
+</html>
