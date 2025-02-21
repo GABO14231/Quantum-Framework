@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <script type="module" src="../js/com/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            let quantumInit = async () => {
+            quantum.fExt = ()=>{console.log('funcion externa ejecutada')};
+            let c = await quantum.createInstance("QuantumCheckBox", {
+                    'id':'QuantumCheckJavascript', 
+                    'caption' : 'Hola',
+                    'style' : {'left':'112px', 'top':'105px',},
+                    'events' : {'mouseup': (e)=>{ console.log('Clicked.'); }},
+                    'checked' : true,
+                });
+                c.built = ()=>{
+                    console.log('QuantumCheckBox built');
+                }
+                c.addToBody();
+            };
+        </script>
+        <quantum-check 
+        onclick = "quantum.fExt()"  
+        id = "QuantumCheckhtml" 
+        caption="hola3" 
+        style="position:absolute; left:120px; top:140px">
+        </quantum-check>
+
+        <quantum-check 
+        id = "QuantumCheckhtml" 
+        caption="hola2" 
+        style="position:absolute; left:120px; top:170px">
+        </quantum-check>
+    </body>
+</html>
+

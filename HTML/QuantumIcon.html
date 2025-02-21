@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum-Icon</title>
+</head>
+<body>
+
+    <quantum-icon icon-name="data-error" caption="Web" on-press="handlePressWeb"></quantum-icon>
+    <quantum-icon icon-name="error" caption="Error" active-shadow on-press="handlePressError"></quantum-icon>
+    <quantum-icon icon-name="pepe" caption="Button" hint="Soy un hint" on-press="handlePressButton"></quantum-icon>
+    <quantum-icon icon-name="youtube" caption="Youtube" active-shadow on-press="handlePressYoutube"></quantum-icon>
+    <quantum-icon icon-name="twitch" caption="Twitch" active-shadow on-press="handlePressTwitch"></quantum-icon>
+    <quantum-icon icon-name="kick" caption="Kick" active-shadow on-press="handlePressKick"></quantum-icon>
+    <quantum-icon icon-name="tiktok" caption="Tiktok" active-shadow on-press="handlePressTiktok"></quantum-icon>
+
+    <script type="module" src="../js/com/QuantumIcon.js"></script>
+    <script>
+        function handlePressWeb() {
+            alert('Web icon pressed!');
+        }
+
+        function handlePressError() {
+            console.log('Error icon pressed!');
+        }
+
+        function handlePressButton() {
+            alert('Button icon pressed!');
+        }
+        
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+
+        function handlePressYoutube() {
+            redirectTo('https://www.youtube.com');
+        }
+        function handlePressTwitch() {
+            redirectTo('https://www.twitch.com');
+        }
+        function handlePressKick() {
+            redirectTo('https://www.kick.com');
+        }
+        function handlePressTiktok() {
+            redirectTo('https://www.tiktok.com');
+        }
+    </script>
+</body>
+</html>

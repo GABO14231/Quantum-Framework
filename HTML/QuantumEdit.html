@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <script type="module" src="../js/com/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            let quantumInit = async () => {
+                quantum.fBlur = ()=>{console.log('Edit html blur')};
+                let e = await quantum.createInstance("QuantumEdit", {
+                    'id':'editjs', 
+                    'required' : true,
+                    'type':'text',
+                    'caption' : 'JS',
+                    'style' : {'left':'10px', 'top':'100px'},
+                    'events' : {
+                        'click': ()=>{ 
+                            console.log('Hola');
+                    
+                        }
+                    }
+                });
+
+                e.built = async ()=>{
+                    quantum.e2 = document.getElementById('MyQuantumEdit');
+                    e.addEventListener('changeCaption', ()=>{console.log("Cambió el caption a: " + e.caption)});
+                    e.addEventListener('enter', ()=>{console.log("Se presionó Enter")});
+                    e.caption="Edit JS:";
+                
+                }
+        
+                let f = document.getElementById('f1');
+                f.appendChild(e);
+            };
+        </script>
+        <form id="f1">
+            <quantum-edit 
+            id = "MyQuantumEdit"  
+            required=true 
+            type="text" 
+            onblur = 'quantum.fBlur()'
+            caption="Html" 
+            style = "position: absolute; left:20px; top:20px">
+            </quantum-edit>
+        </form>
+    </body>
+</html>

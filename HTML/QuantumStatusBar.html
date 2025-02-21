@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum StatusBar Test</title>
+    <script type="module" src="../js/com/QuantumStatusBar.js"></script>
+
+    <style>
+      body {
+        background-color: #393939;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        color: white;
+        text-align: center;
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test Quantum StatusBar Web Component</h1>
+    <button onclick="addNetworkNotification()">Show Network Error</button>
+    <button onclick="addServerNotification()">Show Server Error</button>
+    <button onclick="addInfoNotification()">Show Info Message</button>
+    <button onclick="addSuccessNotification()">Show Success Message</button>
+    <button onclick="addWarningNotification()">Show Warning Message</button>
+
+    <div id="notification-container"></div>
+
+    <quantum-statusbar
+      type="validation"
+      message="Please enter a valid email address."
+      icon="warning"
+      action-text="Fix it"
+      action-url="https://www.youtube.com"
+      dismissible="true"
+      fadeOut="1"
+    >
+    </quantum-statusbar>
+
+    <script>
+      function createNotification(attributes) {
+        const container = document.getElementById("notification-container");
+        const notification = document.createElement("quantum-statusbar");
+
+        Object.entries(attributes).forEach(([key, value]) => {
+          notification.setAttribute(key, value);
+        });
+
+        container.appendChild(notification);
+      }
+
+      function addNetworkNotification() {
+        createNotification({
+          type: "network",
+          message: "Unable to connect to the network.",
+          icon: "error",
+          "action-text": "Retry",
+          dismissible: "true",
+          "action-url": "http://127.0.0.1:5500/WD_VS/Web1/Quantum/public/Testing2/QuantumNotification/QuantumNotification.html",
+          fadeOut: "1",
+        });
+      }
+
+      function addServerNotification() {
+        createNotification({
+          type: "server",
+          message: "Server error occurred.",
+          icon: "data-error",
+          "action-text": "Contact Support",
+          dismissible: "true",
+          "action-url": "https://www.river-run.com/it-blog/what-is-network-support",
+          fadeOut: "5",
+        });
+      }
+
+      function addInfoNotification() {
+        createNotification({
+          type: "info",
+          message: "This is an informational message.",
+          icon: "info",
+          "action-text": "Learn More",
+          dismissible: "true",
+          "action-url": "https://www.wikipedia.org",
+          fadeOut: "1",
+        });
+      }
+
+      function addSuccessNotification() {
+        createNotification({
+          type: "success",
+          message: "Operation completed successfully!",
+          icon: "success",
+          "action-url": "https://www.example.com/success",
+          fadeOut: "1",
+        });
+      }
+
+      function addWarningNotification() {
+        createNotification({
+          type: "warning",
+          message: "Please check your input.",
+          icon: "warning",
+          "action-text": "Fix Issue",
+          dismissible: "true",
+          "action-url": "https://www.example.com/warning",
+          fadeOut: "1",
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumWait Test</title>
+
+    <style>
+      body {
+        background-color: #393939;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        color: white;
+        text-align: center;
+      }
+
+       p{
+        font-weight: bold;
+       }
+    </style>
+
+</head>
+<body>
+        <h1>QuantumWait Test</h1>
+    <p>Default rotation speed (2s):</p>
+    <quantum-wait icon-name="pepe" rotate size="100px"></quantum-wait>
+
+    <p>Custom rotation speed (1s):</p>
+    <quantum-wait icon-name="kick" rotate="1s" size="100px"></quantum-wait>
+
+    <p>Custom rotation speed (3s):</p>
+    <quantum-wait icon-name="warning" rotate="3s" size="100px"></quantum-wait>
+
+    <p>No rotation:</p>
+    <quantum-wait icon-name="Spin1" size="100px"></quantum-wait>
+
+    <script type="module" src="../js/com/QuantumWait.js">
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Notification Test</title>
+    <script type="module" src="../js/com/QuantumNotification.js"></script>
+
+<style>
+      body {
+        background-color: #393939;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        color: white;
+        text-align: center;
+
+      }
+      button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+
+</head>
+<body>
+    <h1>Test Quantum Notification Component</h1>
+    <button onclick="addNetworkNotification()">Show Network Error</button>
+    <button onclick="addServerNotification()">Show Server Error</button>
+
+    <div id="notification-container"></div>
+
+    <quantum-notification
+      type="validation"
+      message="Please enter a valid email address."
+      icon="warning"
+      action-text="Fix it"
+      action-url="https://www.youtube.com"
+      dismissible="true"
+    >
+    </quantum-notification>
+<script>
+      function createNotification(attributes) {
+        const container = document.getElementById("notification-container");
+        const notification = document.createElement("quantum-notification");
+
+        Object.entries(attributes).forEach(([key, value]) => {
+          notification.setAttribute(key, value);
+        });
+
+        container.appendChild(notification);
+      }
+
+      function addNetworkNotification() {
+        createNotification({
+          type: "network",
+          message: "Unable to connect to the network.",
+          icon: "error",
+          "action-text": "Retry",
+          dismissible: "true",
+          "action-url":
+            "http://127.0.0.1:5500/WD_VS/Web1/Quantum/public/Testing2/QuantumNotification/QuantumNotification.html",
+        });
+      }
+
+      function addServerNotification() {
+        createNotification({
+          type: "server",
+          message: "Server error occurred.",
+          icon: "data-error",
+          "action-text": "Contact Support",
+          dismissible: "true",
+          "action-url":
+            "https://www.river-run.com/it-blog/what-is-network-support",
+        });
+      }
+    </script>
+
+</body>
+</html>
