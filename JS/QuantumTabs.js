@@ -1,176 +1,160 @@
-export class QuantumTabs extends Quantum {
-  constructor(props) {
-      super();
-      this.name = "QuantumTabs";
-      this.props = props;
-      if (props?.id) this.id = props.id;
-      this.attachShadow({ mode: 'open' });
-      this.built = () => {};
-  }
+export class QuantumTabs extends Quantum
+{
+    constructor(props)
+    {
+        super();
+        this.name = "QuantumTabs";
+        this.props = props;
+        if (props?.id) this.id = props.id;
+        this.attachShadow({mode: 'open'});
+        this.built = () => {};
+    }
 
-  #getTemplate() {
-      return `
-      <style>
-          .tab {
-              overflow: hidden;
-              border: 1px solid #007BFF;
-              background-color: #007BFF;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding: 10px;
-          }
+    async #getCss() { return await quantum.getCssFile("QuantumTabs"); }
 
-          .tab button {
-              background-color: inherit;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              padding: 14px 16px;
-              transition: 0.3s;
-              font-size: 17px;
-              color: white;
-          }
+    #getTemplate()
+    {
+        return `
+        <div class="tab">
+            <button class="tabnav" data-direction="-1">🡄</button>
+            <button class="tablinks" data-tab="Tab1">Tab 1</button>
+            <button class="tablinks" data-tab="Tab2">Tab 2</button>
+            <button class="tablinks" data-tab="Tab3">Tab 3</button>
+            <button class="tablinks" data-tab="Tab4">Tab 4</button>
+            <button class="tabnav" data-direction="1">🡆</button>
+        </div>
 
-          .tab button:hover {
-              background-color: #0056b3;
-          }
+        <div id="Tab1" class="tabcontent">
+            <h3>Tab 1</h3>
+            <p>Contenido del Tab 1.</p>
+        </div>
 
-          .tab button.active {
-              background-color: #0056b3;
-          }
+        <div id="Tab2" class="tabcontent">
+            <h3>Tab 2</h3>
+            <p>Contenido del Tab 2.</p>
+        </div>
 
-          .tabcontent {
-              display: none;
-              padding: 20px;
-              border: 1px solid #007BFF;
-              border-top: none;
-              background-color: white;
-              color: #333;
-          }
+        <div id="Tab3" class="tabcontent">
+            <h3>Tab 3</h3>
+            <p>Contenido del Tab 3.</p>
+        </div>
 
-          .tabnav {
-              background-color: inherit;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              padding: 10px 15px;
-              transition: 0.3s;
-              font-size: 20px;
-              color: white;
-          }
+        <div id="Tab4" class="tabcontent">
+            <h3>Tab 4</h3>
+            <p>El lol es malo.</p>
+        </div>
+        `;
+    }
 
-          .tabnav:hover {
-              background-color: #0056b3;
-          }
-      </style>
-      <div class="tab">
-          <button class="tabnav" data-direction="-1">🡄</button>
-          <button class="tablinks" data-tab="Tab1">Tab 1</button>
-          <button class="tablinks" data-tab="Tab2">Tab 2</button>
-          <button class="tablinks" data-tab="Tab3">Tab 3</button>
-          <button class="tablinks" data-tab="Tab4">Tab 4</button>
-          <button class="tabnav" data-direction="1">🡆</button>
-      </div>
+    async #render(css)
+    {
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+        this.shadowRoot.adoptedStyleSheets = [sheet];
+        this.template = document.createElement('template');
+        this.template.innerHTML = this.#getTemplate();
+        this.shadowRoot.appendChild(this.template.content.cloneNode(true));
+        this.mainElement = this.shadowRoot.querySelector('.tab');
+        this.tabcontent = this.shadowRoot.querySelectorAll('.tabcontent');
+        this.tablinks = this.shadowRoot.querySelectorAll('.tablinks');
+    }
 
-      <div id="Tab1" class="tabcontent">
-          <h3>Tab 1</h3>
-          <p>Contenido del Tab 1.</p>
-      </div>
+    async #applyProps()
+    {
+        if (this.props)
+        {
+            Object.entries(this.props).forEach(([key, value]) =>
+            {
+                if (key === 'style')
+                    Object.assign(this.mainElement.style, value);
+                else if (key === 'events')
+                    Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
+                else
+                {
+                    this[key] = value;
+                    this.setAttribute(key, value);
+                }
+            });
+        }
+        else
+            this.getAttributeNames().forEach(attr =>
+            {
+                if (!attr.startsWith("on"))
+                {
+                    const value = this.getAttribute(attr);
+                    this.mainElement.setAttribute(attr, value);
+                    this[attr] = value;
+                }
+            });
+    }
 
-      <div id="Tab2" class="tabcontent">
-          <h3>Tab 2</h3>
-          <p>Contenido del Tab 2.</p>
-      </div>
+    initializeEvents()
+    {
+        // Botones de las pestañas
+        const tabButtons = this.shadowRoot.querySelectorAll('.tablinks');
+        tabButtons.forEach(button =>
+        {
+            button.addEventListener('click', (event) => {this.openTab(event, button.getAttribute('data-tab'));});
+        });
 
-      <div id="Tab3" class="tabcontent">
-          <h3>Tab 3</h3>
-          <p>Contenido del Tab 3.</p>
-      </div>
+        // Flechas de navegación
+        const navButtons = this.shadowRoot.querySelectorAll('.tabnav');
+        navButtons.forEach(button => 
+        {
+            button.addEventListener('click', () =>
+            {
+                const direction = parseInt(button.getAttribute('data-direction'));
+                this.moveTab(direction);
+            });
+        });
+    }
 
-      <div id="Tab4" class="tabcontent">
-          <h3>Tab 4</h3>
-          <p>El lol es malo.</p>
-      </div>
-      `;
-  }
+    openTab(evt, tabName)
+    {
+        // Ocultar todos los contenidos de las pestañas
+        this.tabcontent.forEach(tab => {tab.style.display = "none";});
 
-  async #render() {
-      this.shadowRoot.innerHTML = this.#getTemplate();
-      this.initializeEvents();
-      this.openTab(null, 'Tab1'); // Mostrar la primera pestaña por defecto
-  }
+        // Desactivar todos los botones de las pestañas
+        this.tablinks.forEach(link => {link.classList.remove("active");});
 
-  initializeEvents() {
-      // Botones de las pestañas
-      const tabButtons = this.shadowRoot.querySelectorAll('.tablinks');
-      tabButtons.forEach(button => {
-          button.addEventListener('click', (event) => {
-              this.openTab(event, button.getAttribute('data-tab'));
-          });
-      });
+        // Mostrar el contenido de la pestaña seleccionada
+        const selectedTab = this.shadowRoot.getElementById(tabName);
+        if (selectedTab)
+            selectedTab.style.display = "block";
 
-      // Flechas de navegación
-      const navButtons = this.shadowRoot.querySelectorAll('.tabnav');
-      navButtons.forEach(button => {
-          button.addEventListener('click', () => {
-              const direction = parseInt(button.getAttribute('data-direction'));
-              this.moveTab(direction);
-          });
-      });
-  }
+        // Activar el botón de la pestaña seleccionada
+        if (evt)
+            evt.currentTarget.classList.add("active");
+        else
+            // Activar la primera pestaña por defecto
+            this.tablinks[0].classList.add("active");
+    }
 
-  openTab(evt, tabName) {
-      // Ocultar todos los contenidos de las pestañas
-      const tabcontent = this.shadowRoot.querySelectorAll('.tabcontent');
-      tabcontent.forEach(tab => {
-          tab.style.display = "none";
-      });
+    moveTab(direction)
+    {
+        const tabs = this.shadowRoot.querySelectorAll('.tablinks');
+        const currentTab = this.shadowRoot.querySelector('.tablinks.active');
+        let tabIndex = Array.prototype.indexOf.call(tabs, currentTab);
+        let nextTab = tabIndex + direction;
 
-      // Desactivar todos los botones de las pestañas
-      const tablinks = this.shadowRoot.querySelectorAll('.tablinks');
-      tablinks.forEach(link => {
-          link.classList.remove("active");
-      });
+        if (nextTab >= tabs.length)
+            nextTab = 0;
+        else if (nextTab < 0)
+            nextTab = tabs.length - 1;
 
-      // Mostrar el contenido de la pestaña seleccionada
-      const selectedTab = this.shadowRoot.getElementById(tabName);
-      if (selectedTab) {
-          selectedTab.style.display = "block";
-      }
+        tabs[nextTab].click();
+    }
 
-      // Activar el botón de la pestaña seleccionada
-      if (evt) {
-          evt.currentTarget.classList.add("active");
-      } else {
-          // Activar la primera pestaña por defecto
-          tablinks[0].classList.add("active");
-      }
-  }
+    async connectedCallback()
+    {
+        await this.#render(await this.#getCss());
+        await this.#applyProps();
+        this.initializeEvents();
+        this.openTab(null, 'Tab1');
+        this.built();
+    }
 
-  moveTab(direction) {
-      const tabs = this.shadowRoot.querySelectorAll('.tablinks');
-      const currentTab = this.shadowRoot.querySelector('.tablinks.active');
-      let tabIndex = Array.prototype.indexOf.call(tabs, currentTab);
-      let nextTab = tabIndex + direction;
-
-      if (nextTab >= tabs.length) {
-          nextTab = 0;
-      } else if (nextTab < 0) {
-          nextTab = tabs.length - 1;
-      }
-
-      tabs[nextTab].click();
-  }
-
-  async connectedCallback() {
-      await this.#render();
-      this.built();
-  }
-
-  addToBody() {
-      quantum.addToBody(this);
-  }
+    addToBody() {quantum.addToBody(this);}
 }
 
 customElements.define('quantum-tabs', QuantumTabs);

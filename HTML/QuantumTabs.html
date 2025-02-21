@@ -1,28 +1,18 @@
 <html>
-<head>
-    <title>Quantum Tabs Example</title>
-    <script type="module" src="../JS/Quantum.js"></script>
-    <script type="module" src="../JS/QuantumTabs.js"></script>
-</head>
-<body>
-    <script>
-        const quantumInit = async () => {
-            // Crear una sola instancia de las pestañas
-            const tabs = await quantum.createInstance("QuantumTabs", {
-                id: 'main-tabs',
-            });
-
-            // Configurar el callback "built"
-            tabs.built = () => {
-                console.log('Tabs Built!');
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const tabs = await quantum.createInstance("QuantumTabs",
+                {
+                    id: 'main-tabs',
+                });
+                tabs.built = () => {console.log('Built Component!');};
+                tabs.addToBody();
             };
-
-            // Agregar las pestañas al cuerpo del documento
-            tabs.addToBody();
-        };
-
-        // Llamar a quantumInit cuando el DOM esté listo
-        document.addEventListener("DOMContentLoaded", quantumInit);
-    </script>
-</body>
+        </script>
+    </body>
 </html>

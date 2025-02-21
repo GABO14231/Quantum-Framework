@@ -4,17 +4,21 @@
     </head>
     <body>
         <script>
-            const quantumInit = async () => {
-                const card1 = await quantum.createInstance("QuantumCard", {
-                    id: 'Card1',
-                    title: "Card 1",
-                    subtitle: "First Card",
-                    description: "This is the first card in the grid.",
-                    image: "https://th.bing.com/th/id/R.9af774423f6b1345dec770588462065a?rik=e00wHfoBh3crIw&pid=ImgRaw&r=0"
+            const quantumInit = async () =>
+            {
+                const card1 = await quantum.createInstance("QuantumCard",
+                {
+                    id: 'CardJS',
+                    title: "JS Card",
+                    subtitle: "JavaScript Card",
+                    description: "This card was made with JavaScript",
+                    image: '../Images/image2.png'
                 });
-                card1.built = () => { console.log('Card 1 Built!'); };
+                card1.built = () => {console.log('Built Component!');};
                 card1.addToBody();
             };
         </script>
+        <quantum-card id="CardHTML" title="HTML Card" subtitle="HTML Card"
+            description="This card was created with HTML." image="../Images/image1.png"></quantum-card>
     </body>
 </html>
