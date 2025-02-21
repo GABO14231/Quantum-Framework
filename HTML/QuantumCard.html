@@ -1,34 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Card Component</title>
-  <script type="module" src="card.js" defer></script>
-  <link rel="stylesheet" href="card.css">
-</head>
-<body>
-    <h1>Card Component Example</h1>
-    <div id="card-wrapper">
-      <custom-card
-        title="Card 1"
-        subtitle="First Card"
-        description="This is the first card in the grid."
-        image="https://th.bing.com/th/id/R.9af774423f6b1345dec770588462065a?rik=e00wHfoBh3crIw&pid=ImgRaw&r=0"
-      ></custom-card>
-      <custom-card
-        title="Card 2"
-        subtitle="Second Card"
-        description="This is the second card in the grid."
-        image="https://th.bing.com/th/id/R.a2b5a860ee40324f264891844d9b8866?rik=tFgbCYanqDQH2w&pid=ImgRaw&r=0"
-      ></custom-card>
-      <custom-card
-        title="Card 3"
-        subtitle="Third Card"
-        description="This is the third card in the grid."
-        image="https://vignette.wikia.nocookie.net/leagueoflegends/images/a/a6/Fiddlesticks_OriginalCentered.jpg/revision/latest?cb=20180414202033"
-      ></custom-card>
-    </div>
-  </body>
-  
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () => {
+                const card1 = await quantum.createInstance("QuantumCard", {
+                    id: 'Card1',
+                    title: "Card 1",
+                    subtitle: "First Card",
+                    description: "This is the first card in the grid.",
+                    image: "https://th.bing.com/th/id/R.9af774423f6b1345dec770588462065a?rik=e00wHfoBh3crIw&pid=ImgRaw&r=0"
+                });
+                card1.built = () => { console.log('Card 1 Built!'); };
+                card1.addToBody();
+            };
+        </script>
+    </body>
 </html>
