@@ -76,26 +76,18 @@ export class QuantumConfirm extends Quantum
 
     async #render(css)
     {
-        return new Promise((resolve, reject) =>
-        {
-            try
-            {
-                const template = document.createElement("template");
-                template.innerHTML = this.#getTemplate();
-                const sheet = new CSSStyleSheet();
-                sheet.replaceSync(css);
-                this.shadowRoot.adoptedStyleSheets = [sheet];
-                const tpc = template.content.cloneNode(true);
-                this.mainElement = tpc.querySelector(".QuantumConfirm");
-                this.titleDialog = tpc.querySelector(".Title");
-                this.bodyDialog = tpc.querySelector(".BodyDialog");
-                this.footerDialog = tpc.querySelector(".Footer");
-                this.shadowRoot.appendChild(this.mainElement);
-                this.mainElement.id = this.id;
-                resolve(this);
-            }
-            catch (e) {reject(e);}
-        });
+        const template = document.createElement("template");
+        template.innerHTML = this.#getTemplate();
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+        this.shadowRoot.adoptedStyleSheets = [sheet];
+        const tpc = template.content.cloneNode(true);
+        this.mainElement = tpc.querySelector(".QuantumConfirm");
+        this.titleDialog = tpc.querySelector(".Title");
+        this.bodyDialog = tpc.querySelector(".BodyDialog");
+        this.footerDialog = tpc.querySelector(".Footer");
+        this.shadowRoot.appendChild(this.mainElement);
+        this.mainElement.id = this.id;
     }
 
     async #applyProps()
