@@ -1,0 +1,119 @@
+.QuantumCalendar {
+    max-width: 320px;
+    margin: 0;
+    padding: 0; /* Ensure no padding is applied */
+    font-family: 'Poppins', sans-serif;
+    display: flex; /* Use flexbox for better alignment */
+    flex-direction: column; /* Align children vertically */
+}
+
+.calendar-container {
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(1000px);
+}
+
+.QuantumCalendarInput {
+    padding: 0;
+    margin: 0; /* Set margin to 0 to align to the top */
+    box-sizing: border-box;
+    width: 100%;
+    border-width: 0px;
+    border-radius: 5px;
+    border: solid;
+    border-width: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+.calendar-current-year{
+    border-style: none;
+    font-size: 1.45rem;
+    width: 53px;
+    background-color: #ffffff00;
+}
+
+.QuantumCalendar header {
+    display: flex;
+    align-items: center;
+    padding: 20px 30px 10px;
+    width: 260;
+    height: 38px;
+    justify-content: space-between;
+}
+
+
+
+header .calendar-current-date {
+    font-weight: 500;
+    font-size: 1.45rem;
+    width: 110px;
+}
+
+.calendar-body {
+    padding: 20px;
+    width: 280px;
+    height: 260px;
+    z-index: 1;
+}
+
+.calendar-body div {
+    list-style: none;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+}
+
+.calendar-date-individual{
+    flex: 0 0 calc(100% / 7); /* Cada elemento ocupa 1/7 del ancho del contenedor */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0px;
+}
+
+.internal-div {
+    width: calc(100% / 7);
+    font-size: 1.07rem;
+}
+
+.calendar-body .calendar-weekdays div {
+    cursor: default;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.calendar-body .calendar-dates div {
+    margin-bottom: 2px;
+    margin-top: 2px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.calendar-dates div.inactive {
+    color: #aaa;
+}
+
+.calendar-dates div.today {
+    color: #fff;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border-width: 1.3px;
+    border-style: solid;
+    border-color: #ffffff00;
+}
+
+.calendar-date-number {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 1;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../JS/Quantum.js" type="module"></script>
+    <title>QuantumCalendar</title>
+
+</head>
+<body>
+    <script>
+        let quantumInit = async () =>
+            {
+                let d = await quantum.createInstance("QuantumCalendar", {
+                    "beginsIn": 0,
+                    "input": false,
+                    'language': 'fr',
+                    'newLanguage': {'days': ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+                        'months': ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]},
+                    'numChar': 3,
+                    'id': 'calendarOne',
+                    'style': {'color': '#1DDA88'}
+                });
+                d.addToBody();
+                let skere = document.createElement("input");
+                document.body.appendChild(skere);
+            };
+    </script>
+    <quantum-calendar input=false id="calendarTwo"></quantum-calendar>
+</body>
+</html>
