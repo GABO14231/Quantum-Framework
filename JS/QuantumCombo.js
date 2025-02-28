@@ -87,29 +87,21 @@ export class QuantumCombo extends Quantum
 
     #render(css)
     {
-        return new Promise((resolve, reject) =>
-        {
-            try
-            {
-                this.template = document.createElement('template');
-                this.template.innerHTML = this.#getTemplate();
-                const sheet = new CSSStyleSheet();
-                sheet.replaceSync(css);
-                this.shadowRoot.adoptedStyleSheets = [sheet];
-                const tpc = this.template.content.cloneNode(true);
-                this.mainElement = tpc.firstChild?.nextSibling;
-                this.inputElement = this.mainElement.querySelector('.QuantumComboInput');
-                this.inputElement.readOnly = true;
-                this.labelElement = this.mainElement.querySelector('.QuantumLabel');
-                this.buttonCombo = this.mainElement.querySelector('.QuantumComboButtonDown');
-                this.panel = this.mainElement.querySelector('.QuantumComboPanel');
-                this.shadowRoot.appendChild(this.mainElement);
-                this.mainElement.id = this.id;
-                this.mainElement.pointerEvents = 'none';
-                resolve(this);
-            } 
-            catch (e) {reject(e);}
-        });
+        this.template = document.createElement('template');
+        this.template.innerHTML = this.#getTemplate();
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+        this.shadowRoot.adoptedStyleSheets = [sheet];
+        const tpc = this.template.content.cloneNode(true);
+        this.mainElement = tpc.firstChild?.nextSibling;
+        this.inputElement = this.mainElement.querySelector('.QuantumComboInput');
+        this.inputElement.readOnly = true;
+        this.labelElement = this.mainElement.querySelector('.QuantumLabel');
+        this.buttonCombo = this.mainElement.querySelector('.QuantumComboButtonDown');
+        this.panel = this.mainElement.querySelector('.QuantumComboPanel');
+        this.shadowRoot.appendChild(this.mainElement);
+        this.mainElement.id = this.id;
+        this.mainElement.pointerEvents = 'none';
     }
 
     getSelected() {return this._options.filter(item => !item.master && item.checkBox.checked);}

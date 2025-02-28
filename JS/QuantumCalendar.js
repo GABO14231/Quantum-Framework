@@ -196,7 +196,7 @@ export class QuantumCalendar extends Quantum
 
         let yearInput = this.mainElement.querySelector(".calendar-current-year");
         yearInput.addEventListener('input',() => {
-            this.year = yearInput.value;
+            this.year = parseInt(yearInput.value);
             this.#addDays();
         })
     }
