@@ -1,11 +1,12 @@
 .QuantumCalendar
 {
+    position: relative;
     max-width: 320px;
-    margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .calendar-container
@@ -31,9 +32,10 @@
 
 .calendar-current-year
 {
+    position: relative;
     border-style: none;
     font-size: 1.45rem;
-    width: 53px;
+    width: 56px;
     background-color: #ffffff00;
 }
 
@@ -41,17 +43,25 @@
 {
     display: flex;
     align-items: center;
-    padding: 20px 30px 10px;
-    width: 260px;
-    height: 38px;
-    justify-content: space-between;
+    padding-top: 7px;
+    padding-left: 2px;
+    margin: auto;
+    height: 50px;
+    justify-content: space-evenly;
 }
 
 header .calendar-current-date
 {
     font-weight: 500;
     font-size: 1.45rem;
-    width: 110px;
+    margin: 0 10px;
+}
+
+.calendar-navigation
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .calendar-body
