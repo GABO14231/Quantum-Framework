@@ -190,7 +190,7 @@ export class QuantumCalendar extends Quantum
             for (let i = 0; i < 7; i++)
             {
                 lastDateAdded++;
-                div += `<div class="inactive calendar-date-individual"><div class="circle"></div><span class="calendar-date-number">${lastDateAdded}</span></div>`
+                div += `<div class="inactive calendar-date-individual" id="d-${lastDateAdded}${this.month + 1}${this.year}"><div class="circle"></div><span class="calendar-date-number">${lastDateAdded}</span></div>`
             }
         }
         if ((timeDifference < 5 || lastDate < 30) || (timeDifference === 5 && lastDate === 30))
