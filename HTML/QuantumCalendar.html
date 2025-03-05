@@ -15,10 +15,16 @@
                     'newLanguage': {'days': ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
                         'months': ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]},
                     'numChar': 3,
-                    'style': {'color': '#1DDA88'}
+                    'style': {'color': '#1DDA88'},
+                    'format': 'dd/mm/yy'
                 });
                 d.built = () => {console.log('Built Component!');}
                 d.addToBody();
+                const b = await quantum.createInstance("QuantumButton",{
+                    caption: "Log de fecha!",
+                    events: {'click': () => {console.log(d.getDateFormat());}}
+                })
+                b.addToBody()
             };
         </script>
         <quantum-calendar id="calendarTwo" input=false></quantum-calendar>
