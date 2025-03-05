@@ -31,32 +31,54 @@ export class QuantumCombo extends Quantum
 
     async #getCss() {return await quantum.getCssFile("QuantumCombo");}
 
-    #getObjProp(f)
+    #render(css)
     {
-        return {
-            option: f.getAttribute('option') || f.innerHTML,
-            value: f.getAttribute('value') || 0,
-            sts: f.getAttribute('sts') === 'true'
-        };
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+        this.shadowRoot.adoptedStyleSheets = [sheet];
+        this.shadowRoot.innerHTML = this.#getTemplate();
+        this.mainElement = this.shadowRoot.querySelector('.QuantumCombo');
+        this.mainElement.pointerEvents = 'none';
+        this.inputElement = this.mainElement.querySelector('.QuantumComboInput');
+        this.inputElement.readOnly = true;
+        this.labelElement = this.mainElement.querySelector('.QuantumLabel');
+        this.buttonCombo = this.mainElement.querySelector('.QuantumComboButtonDown');
+        this.panel = this.mainElement.querySelector('.QuantumComboPanel');
+    }
+
+    #applyProps()
+    {
+        if (this.props)
+        {
+            Object.entries(this.props).forEach(([key, value]) =>
+            {
+                if (key === 'master') this.addOption({option: 'JS Master', value: 0, master: true});
+                else if (key === 'style') Object.assign(this.mainElement.style, value);
+                else if (key === 'events')
+                    Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
+                else {this[key] = value; this.setAttribute(key, value);}
+            });
+        }
+        else
+            this.getAttributeNames().forEach(attr =>
+            {
+                if (!attr.startsWith("on"))
+                {
+                    const value = this.getAttribute(attr);
+                    this.mainElement.setAttribute(attr, value);
+                    this[attr] = value;
+                }
+            });
     }
 
     #checkAttributes()
     {
-        this.getAttributeNames().forEach(attr =>
-        {
-            if (!attr.startsWith("on"))
-            {
-                const value = this.getAttribute(attr);
-                this.mainElement.setAttribute(attr, value);
-                this[attr] = value;
-            }
-        });
         if (this.innerHTML)
         {
             const templ = document.createElement('template');
             templ.innerHTML = this.innerHTML;
             let f = templ.content.firstElementChild;
-            while (f) 
+            while (f)
             {
                 this.addOption(this.#getObjProp(f));
                 f = f.nextElementSibling;
@@ -64,44 +86,13 @@ export class QuantumCombo extends Quantum
         }
     }
 
-    #checkProps()
+    #getObjProp(f)
     {
-        if (this.props)
-        {
-            Object.entries(this.props).forEach(([key, value]) =>
-            {
-                if (key === 'master')
-                    this.addOption({option: 'JS Master', value: 0, master: true});
-                else if (key === 'style')
-                    Object.assign(this.mainElement.style, value);
-                else if (key === 'events')
-                    Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
-                else
-                {
-                    this[key] = value;
-                    this.setAttribute(key, value);
-                }
-            });
-        }
-    }
-
-    #render(css)
-    {
-        this.template = document.createElement('template');
-        this.template.innerHTML = this.#getTemplate();
-        const sheet = new CSSStyleSheet();
-        sheet.replaceSync(css);
-        this.shadowRoot.adoptedStyleSheets = [sheet];
-        const tpc = this.template.content.cloneNode(true);
-        this.mainElement = tpc.firstChild?.nextSibling;
-        this.inputElement = this.mainElement.querySelector('.QuantumComboInput');
-        this.inputElement.readOnly = true;
-        this.labelElement = this.mainElement.querySelector('.QuantumLabel');
-        this.buttonCombo = this.mainElement.querySelector('.QuantumComboButtonDown');
-        this.panel = this.mainElement.querySelector('.QuantumComboPanel');
-        this.shadowRoot.appendChild(this.mainElement);
-        this.mainElement.id = this.id;
-        this.mainElement.pointerEvents = 'none';
+        return {
+            option: f.getAttribute('option') || f.innerHTML,
+            value: f.getAttribute('value') || 0,
+            sts: f.getAttribute('sts') === 'true'
+        };
     }
 
     getSelected() {return this._options.filter(item => !item.master && item.checkBox.checked);}
@@ -232,8 +223,7 @@ export class QuantumCombo extends Quantum
     {
         if (this._options.length > 0)
         {
-            if (this.inputElement.value.trim() === '')
-                this.labelElement.style.animationName = 'labelDown';
+            if (this.inputElement.value.trim() === '') this.labelElement.style.animationName = 'labelDown';
             this.panel.animate([{ visibility: 'hidden', height: '0%' }], {duration: 300, fill: 'both'});
         }
     }
@@ -265,8 +255,7 @@ export class QuantumCombo extends Quantum
             if (this._enabled)
             {
                 e.preventDefault();
-                if (this._options.length > 0)
-                    animaClose();
+                if (this._options.length > 0) animaClose();
             }
         });
 
@@ -276,23 +265,19 @@ export class QuantumCombo extends Quantum
             {
                 e.preventDefault();
                 e.stopImmediatePropagation();
-                if (this._options.length > 0)
-                    this.isShow ? animaClose() : animaOpen();
+                if (this._options.length > 0) this.isShow ? animaClose() : animaOpen();
             }
         });
     }
 
     async connectedCallback()
     {
-        await this.#render(await this.#getCss());
-
-        if (this.getAttribute('master') === 'true')
-            await this.addOption({option: 'HTML Master', value: 0, master: true});
-
+        this.#render(await this.#getCss());
+        if (this.getAttribute('master') === 'true') await this.addOption({option: 'HTML Master', value: 0, master: true});
+        this.#applyProps();
         this.#checkAttributes();
-        this.#checkProps();
         this.#events();
-        this.built(this);
+        this.built();
     }
 
     get master() {return this._masterCheck;}
@@ -314,7 +299,6 @@ export class QuantumCombo extends Quantum
         const setSts = (v) => {this._enabled = v; this.style.opacity = v ? 1 : 0.4;};
         setSts(val === 'true' ? true : (val === 'false' ? false : val));
     }
-
     addToBody() {quantum.addToBody(this);}
 }
 

@@ -17,20 +17,14 @@ export class Quantum extends HTMLElement
             this.cssFiles.set(fileName, css);
             return css;
         }
-        else
-            return this.cssFiles.get(fileName);
+        else return this.cssFiles.get(fileName);
     }
 
     async getSVG(fileName)
     {
         const response = await fetch(`${quantum.routes.svg}${fileName}.svg`);
-        if (response.ok)
-            return `${quantum.routes.svg}${fileName}.svg`;
-        else
-        {
-            console.error(`SVG file not found.`);
-            return null;
-        }
+        if (response.ok) return `${quantum.routes.svg}${fileName}.svg`;
+        else { console.error(`SVG file not found.`); return null;}
     }
 
     async getClass(className)
@@ -58,15 +52,11 @@ export class Quantum extends HTMLElement
     getInstance(id)
     {
         const e = document.getElementById(id);
-
-        if(e) 
-            return e; 
+        if(e) return e; 
         else
         {
-            if(this.instances.has(id))
-                return this.instances.get(id)
-            else 
-                return null
+            if(this.instances.has(id)) return this.instances.get(id)
+            else return null
         }
     }
 

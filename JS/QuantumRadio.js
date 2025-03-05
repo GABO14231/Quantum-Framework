@@ -23,31 +23,26 @@ export class QuantumRadio extends Quantum
 
     async #getCss() {return await quantum.getCssFile("QuantumRadio");}
 
-    async #render(css)
+    #render(css)
     {
-        this.template = document.createElement('template');
-        this.template.innerHTML = this.#getTemplate();
         const sheet = new CSSStyleSheet();
         sheet.replaceSync(css);
         this.shadowRoot.adoptedStyleSheets = [sheet];
-        const tpc = this.template.content.cloneNode(true);
-        this.mainElement = tpc.firstElementChild;
+        this.shadowRoot.innerHTML = this.#getTemplate();
+        this.mainElement = this.shadowRoot.querySelector('.QuantumRadioPanel');
+        this.mainElement.pointerEvents = 'none';
         this.extRadio = this.mainElement.querySelector('.QuantumExtRadio');
         this.intRadio = this.extRadio.querySelector('.QuantumIntRadio');
         this.captionPanel = this.mainElement.querySelector('.QuantumRadioCaption');
-        this.shadowRoot.appendChild(this.mainElement);  
-        this.mainElement.id = this.id;
-        this.mainElement.pointerEvents = 'none';
     }
 
-    async #applyProps()
+    #applyProps()
     {
         if (this.props)
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'style')
-                    Object.assign(this.mainElement.style, value);
+                if (key === 'style') Object.assign(this.mainElement.style, value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
                 else if (key === 'group')
@@ -57,28 +52,24 @@ export class QuantumRadio extends Quantum
                     quantum.radioGroup[this.props.group] = quantum.radioGroup[this.props.group] || [];
                     quantum.radioGroup[this.props.group].push(this);
                 }
-                else
-                {
-                    this[key] = value;
-                    this.setAttribute(key, value);
-                }
+                else {this[key] = value; this.setAttribute(key, value);}
             });
         }
         else
             this.getAttributeNames().forEach(attr =>
             {
-                if (!attr.startsWith("on"))
-                {
-                    const value = this.getAttribute(attr);
-                    this.mainElement.setAttribute(attr, value);
-                    this[attr] = value;
-                }
                 if (attr === 'group')
                 {
                     const value = this.getAttribute(attr);
                     this.setAttribute(attr, value);
                     quantum.radioGroup[value] = quantum.radioGroup[value] || [];
                     quantum.radioGroup[value].push(this);
+                }
+                else if (!attr.startsWith("on"))
+                {
+                    const value = this.getAttribute(attr);
+                    this.mainElement.setAttribute(attr, value);
+                    this[attr] = value;
                 }
             });
     }
@@ -104,13 +95,10 @@ export class QuantumRadio extends Quantum
 
     async connectedCallback()
     {
-        await this.#render(await this.#getCss());
-        await this.#applyProps();
-        this.mainElement.addEventListener('click', (e) =>
-        {
-            e.preventDefault();
-            this.#selectRadio(true);
-        });  
+        this.#render(await this.#getCss());
+        this.#applyProps();
+        this.mainElement.addEventListener('click', (e) => {e.preventDefault(); this.#selectRadio(true);});
+        this.built();
     }
 
     get caption() {return this._caption;}

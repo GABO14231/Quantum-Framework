@@ -25,79 +25,25 @@ export class QuantumConfirm extends Quantum
     async #getCss() {return await quantum.getCssFile("QuantumConfirm");}
     async #getSVG(fileName) {return await quantum.getSVG(fileName)}
 
-    async #createButtons()
+    #render(css)
     {
-        const buttonStyles =
-        {
-            'height': '50px',
-            'padding': '20px',
-            'fontSize': '20px'
-        };
-
-        const events = this.props?.events || {};
-
-        this.confirmBtn = await quantum.createInstance("QuantumButton",
-        {
-            id: `confirmBtn-${this.id}`,
-            caption: 'Confirm',
-            style: buttonStyles,
-            events:
-            {
-                click: () =>
-                {
-                    if (events.confirm)
-                        events.confirm();
-                    this.dispatchEvent(new CustomEvent("confirm"));
-                    this.hide();
-                }
-            }
-        });
-
-        this.cancelBtn = await quantum.createInstance("QuantumButton",
-        {
-            id: `cancelBtn-${this.id}`,
-            caption: 'Cancel',
-            style: buttonStyles,
-            events:
-            {
-                click: () =>
-                {
-                    if (events.cancel)
-                        events.cancel();
-                    this.dispatchEvent(new CustomEvent("cancel"));
-                    this.hide();
-                }
-            }
-        });
-
-        this.footerDialog.appendChild(this.confirmBtn);
-        this.footerDialog.appendChild(this.cancelBtn);
-    }
-
-    async #render(css)
-    {
-        const template = document.createElement("template");
-        template.innerHTML = this.#getTemplate();
         const sheet = new CSSStyleSheet();
         sheet.replaceSync(css);
         this.shadowRoot.adoptedStyleSheets = [sheet];
-        const tpc = template.content.cloneNode(true);
-        this.mainElement = tpc.querySelector(".QuantumConfirm");
-        this.titleDialog = tpc.querySelector(".Title");
-        this.bodyDialog = tpc.querySelector(".BodyDialog");
-        this.footerDialog = tpc.querySelector(".Footer");
-        this.shadowRoot.appendChild(this.mainElement);
-        this.mainElement.id = this.id;
+        this.shadowRoot.innerHTML = this.#getTemplate();
+        this.mainElement = this.shadowRoot.querySelector(".QuantumConfirm");
+        this.titleDialog = this.shadowRoot.querySelector(".Title");
+        this.bodyDialog = this.shadowRoot.querySelector(".BodyDialog");
+        this.footerDialog = this.shadowRoot.querySelector(".Footer");
     }
 
-    async #applyProps()
+    #applyProps()
     {
         if (this.props)
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'style')
-                    Object.assign(this.mainElement.style, value);
+                if (key === 'style') Object.assign(this.mainElement.style, value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
             });
@@ -112,15 +58,6 @@ export class QuantumConfirm extends Quantum
                     this[attr] = value;
                 }
             });
-    }
-
-    async connectedCallback()
-    {
-        await this.#render(await this.#getCss());
-        await this.#applyProps();
-        await this.#addContent();
-        await this.#createButtons();
-        this.built(this);
     }
 
     async #addContent()
@@ -154,7 +91,61 @@ export class QuantumConfirm extends Quantum
         this.bodyDialog.appendChild(confirmText);
     }
 
-    addToBody() {quantum.addToBody(this);}
+    async #createButtons()
+    {
+        const buttonStyles =
+        {
+            'height': '50px',
+            'padding': '20px',
+            'fontSize': '20px'
+        };
+        const events = this.props?.events || {};
+
+        this.confirmBtn = await quantum.createInstance("QuantumButton",
+        {
+            id: `confirmBtn-${this.id}`,
+            caption: 'Confirm',
+            style: buttonStyles,
+            events:
+            {
+                click: () =>
+                {
+                    if (events.confirm) events.confirm();
+                    this.dispatchEvent(new CustomEvent("confirm"));
+                    this.hide();
+                }
+            }
+        });
+
+        this.cancelBtn = await quantum.createInstance("QuantumButton",
+        {
+            id: `cancelBtn-${this.id}`,
+            caption: 'Cancel',
+            style: buttonStyles,
+            events:
+            {
+                click: () =>
+                {
+                    if (events.cancel) events.cancel();
+                    this.dispatchEvent(new CustomEvent("cancel"));
+                    this.hide();
+                }
+            }
+        });
+
+        this.footerDialog.appendChild(this.confirmBtn);
+        this.footerDialog.appendChild(this.cancelBtn);
+    }
+
+    async connectedCallback()
+    {
+        this.#render(await this.#getCss());
+        this.#applyProps();
+        await this.#addContent();
+        await this.#createButtons();
+        this.built();
+    }
+
     hide()
     {
         this.mainElement.style.animationName = "hide";
@@ -171,6 +162,7 @@ export class QuantumConfirm extends Quantum
         }, 2000);
     }
     show(){quantum.show();}
+    addToBody() {quantum.addToBody(this);}
 }
 
 customElements.define('quantum-confirm', QuantumConfirm);

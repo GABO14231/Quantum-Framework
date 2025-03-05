@@ -6,28 +6,27 @@
         <script>
             const quantumInit = async () =>
             {
-                let c = await quantum.createInstance("QuantumCombo",
+                const c = await quantum.createInstance("QuantumCombo",
                 {
                     id: 'QuantumComboJS',
                     style: {'left': '100px', 'top': '50px', 'width': '130px'},
                     master: true,
                     caption: 'JS List:',
                     // enabled : false,
-                    // events : {'mouseup': (e)=>{ console.log(`Clicked on ${c.caption}!`); }},
+                    // events : {'mouseup': (e)=>{ console.log(`Clicked on ${c.caption}!`); }}
                 });
                 c.built = async () =>
                 {
                     console.log('Built Component!');
-                    await c.addOption({'option': 'First', 'value': 50, 'sts': false})
-                    await c.addOption({'option': 'Second', 'value': 150, 'sts': false})
-                    await c.addOption({'option': 'Third', 'value': 100, 'sts': false})
-                    await c.addOption({'option': 'Fourth', 'value': 10, 'sts': false})
-                    await c.addOption({'option': 'Fifth', 'value': 100, 'sts': false})
-                    await c.addOption({'option': 'Sixth', 'value': 100, 'sts': false})
+                    await c.addOption({'option': 'First', 'value': 50, 'sts': false});
+                    await c.addOption({'option': 'Second', 'value': 150, 'sts': false});
+                    await c.addOption({'option': 'Third', 'value': 100, 'sts': false});
+                    await c.addOption({'option': 'Fourth', 'value': 10, 'sts': false});
+                    await c.addOption({'option': 'Fifth', 'value': 100, 'sts': false});
+                    await c.addOption({'option': 'Sixth', 'value': 100, 'sts': false});
                 }
                 c.addToBody();
                 // c.enabled = false;
-
                 const b = await quantum.createInstance("QuantumButton",
                 {
                     id: 'SatusButton',
@@ -42,12 +41,11 @@
                 });
                 b.addToBody();
             };
-
             const getStsCheck = () =>
             {
                 console.log('Selected options in JS List: ', quantum.getInstance('QuantumComboJS').getSelected());
                 console.log('Unchecked options in HTML List: ', quantum.getInstance('QuantumComboHTML').getDiselected());
-            }
+            };
         </script>
         <quantum-combo master=true id="QuantumComboHTML" caption="HTML List:" style="left:400px; top:50px; width:150px">
             <option value="150" sts=false>First HTML</option>

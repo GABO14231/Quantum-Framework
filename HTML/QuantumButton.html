@@ -12,7 +12,6 @@
                     caption: 'Cancel',
                     events: {click: () => console.log(`Clicked on ${b.caption}!`)}
                 });
-
                 b.built = () =>
                 {
                     console.log('Built Component!');
@@ -23,6 +22,6 @@
             };
         </script>
         <quantum-button id = "MyQuantumButtonHTML" caption = "Accept" style="background-color: green"
-        onclick="console.log(`Clicked on ${caption}!`)"></quantum-button>
+            onclick="console.log(`Clicked on ${caption}!`)"></quantum-button>
     </body>
 </html>

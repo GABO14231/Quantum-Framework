@@ -12,32 +12,25 @@ export class QuantumButton extends Quantum
 
     async #getCss() {return await quantum.getCssFile("QuantumButton");}
 
-    async #render(css)
+    #render(css)
     {
         const sheet = new CSSStyleSheet();
         sheet.replaceSync(css);
         this.shadowRoot.adoptedStyleSheets = [sheet];
-        this.template = document.createElement('template');
-        this.template.innerHTML = `<button class='QuantumButton'></button>`;
-        this.shadowRoot.appendChild(this.template.content.cloneNode(true).firstChild);
+        this.shadowRoot.innerHTML = `<button class='QuantumButton'></button>`;
         this.mainElement = this.shadowRoot.querySelector('.QuantumButton');
     }
 
-    async #applyProps()
+    #applyProps()
     {
         if (this.props)
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'style')
-                    Object.assign(this.mainElement.style, value);
+                if (key === 'style') Object.assign(this.mainElement.style, value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
-                else
-                {
-                    this[key] = value;
-                    this.setAttribute(key, value);
-                }
+                else {this[key] = value; this.setAttribute(key, value);}
             });
         }
         else
@@ -54,17 +47,13 @@ export class QuantumButton extends Quantum
 
     async connectedCallback()
     {
-        await this.#render(await this.#getCss());
-        await this.#applyProps();
+        this.#render(await this.#getCss());
+        this.#applyProps();
         this.built();
     }
 
     get caption() {return this.mainElement.innerHTML;}
-    set caption(val)
-    {
-        this.mainElement.innerHTML = val;
-        this.dispatchEvent(new CustomEvent("changeCaption", {bubbles: true}));
-    }
+    set caption(val) {this.mainElement.innerHTML = val; this.dispatchEvent(new CustomEvent("changeCaption", {bubbles: true}));}
     get disabled() {return this.mainElement.disabled;}
     set disabled(val) {this.mainElement.disabled = val;}
     addToBody() {quantum.addToBody(this);}

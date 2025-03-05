@@ -21,36 +21,26 @@ export class QuantumSwitch extends Quantum
 
     async #getCss() {return await quantum.getCssFile("QuantumSwitch");}
 
-    async connectedCallback()
+    #render(css)
     {
         const sheet = new CSSStyleSheet();
-        sheet.replaceSync(await this.#getCss());
+        sheet.replaceSync(css);
         this.shadowRoot.adoptedStyleSheets = [sheet];
         this.shadowRoot.innerHTML = this.#getTemplate();
-
         this.mainElement = this.shadowRoot.querySelector('.QuantumSwitch');
         this.buttonSwitch = this.mainElement.querySelector('.QuantumSwitchButton');
-
-        this.#applyProps();
-        this.#events();
-        this.built();
     }
 
-    async #applyProps()
+    #applyProps()
     {
         if (this.props)
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'style')
-                    Object.assign(this.mainElement.style, value);
+                if (key === 'style') Object.assign(this.mainElement.style, value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
-                else
-                {
-                    this[key] = value;
-                    this.setAttribute(key, value);
-                }
+                else {this[key] = value; this.setAttribute(key, value);}
             });
         }
         else
@@ -70,22 +60,20 @@ export class QuantumSwitch extends Quantum
             });
     }
 
-    #events()
-    {
-        this.mainElement.addEventListener('pointerup', () =>
-        {
-            if (!this.disabled)
-                this.sts = !this._sts;
-        }, false);
-    }
-
+    #events() {this.mainElement.addEventListener('pointerup', () => {if (!this.disabled) this.sts = !this._sts;}, false);}
     #fullAnimation()
     {
         this.buttonSwitch.style.animationName = this._sts ? "sw_move_on" : "sw_move_off";
         this.mainElement.animate([{ opacity: this._sts ? 1 : 0.6 }], {duration: 500, fill: 'both'});
     }
 
-    addToBody() {quantum.addToBody(this);}
+    async connectedCallback()
+    {
+        this.#render(await this.#getCss());
+        this.#applyProps();
+        this.#events();
+        this.built();
+    }
 
     get disabled() {return this.mainElement.disabled;}
     set disabled(val)
@@ -94,13 +82,13 @@ export class QuantumSwitch extends Quantum
         this.mainElement.disabled = val;
         this.mainElement.animate([{ opacity: val ? 0.2 : 1 }], {duration: 500, fill: 'both'});
     }
-
     get sts() {return this._sts;}
     set sts(val)
     {
         this._sts = val;
         this.#fullAnimation();
     }
+    addToBody() {quantum.addToBody(this);}
 }
 
 customElements.define('quantum-switch', QuantumSwitch);

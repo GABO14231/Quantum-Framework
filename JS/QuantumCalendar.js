@@ -38,14 +38,12 @@ export class QuantumCalendar extends Quantum
 
     async #getCss() {return await quantum.getCssFile("QuantumCalendar");}
 
-    async #render(css)
+    #render(css)
     {
         const sheet = new CSSStyleSheet();
         sheet.replaceSync(css);
         this.shadowRoot.adoptedStyleSheets = [sheet];
-        this.template = document.createElement("template");
-        this.template.innerHTML = this.#getTemplate();
-        this.shadowRoot.appendChild(this.template.content.cloneNode(true).querySelector(".QuantumCalendar"));
+        this.shadowRoot.innerHTML = this.#getTemplate();
         this.mainElement = this.shadowRoot.querySelector('.QuantumCalendar');
         this.calendarInput = this.shadowRoot.querySelector(".QuantumCalendarInput");
         this.calendarContainer = this.mainElement.querySelector(".calendar-container");
@@ -61,17 +59,11 @@ export class QuantumCalendar extends Quantum
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'style')
-                    this.#applyStyles(value);
+                if (key === 'style') this.#applyStyles(value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
-                else if (key === 'newLanguage' && this.props['language'])
-                    this.languages[this.props['language']] = value;
-                else
-                {
-                    this[key] = value;
-                    this.setAttribute(key, value);
-                }
+                else if (key === 'newLanguage' && this.props['language']) this.languages[this.props['language']] = value;
+                else {this[key] = value; this.setAttribute(key, value);}
             });
         }
         else
@@ -90,19 +82,13 @@ export class QuantumCalendar extends Quantum
                     this[attr] = value;
                 }
             });
-            if (!this.getAttribute('style'))
-                this.#applyStyles();
+            if (!this.getAttribute('style')) this.#applyStyles();
         }
-        if (!this.getAttribute('beginsIn'))
-            this.setAttribute('beginsIn', 0);
-        if (!this.getAttribute('input'))
-            this.setAttribute('input', false);
-        if (!this.getAttribute('language'))
-            this.setAttribute('language', 'en');
-        if (!this.getAttribute('numChar'))
-            this.setAttribute('numChar', 2);
-        if(!this.getAttribute('format'))
-            this.setAttribute('format', 'dd/mm/yyyy');
+        if (!this.getAttribute('beginsIn')) this.setAttribute('beginsIn', 0);
+        if (!this.getAttribute('input')) this.setAttribute('input', false);
+        if (!this.getAttribute('language')) this.setAttribute('language', 'en');
+        if (!this.getAttribute('numChar')) this.setAttribute('numChar', 2);
+        if (!this.getAttribute('format')) this.setAttribute('format', 'dd/mm/yyyy');
     }
 
     #applyStyles(value)
@@ -123,11 +109,11 @@ export class QuantumCalendar extends Quantum
             if (value.color)
             {
                 const [comp1, comp2] = complementaryColors(value.color);
-                this.calendarInput.style.backgroundColor = `${shadeHexColor(value.color, 0.65)}`;
-                this.calendarContainer.style.backgroundColor = `${shadeHexColor(value.color, 0.65)}`;
+                this.calendarInput.style.backgroundColor = `${this.#shadeHexColor(value.color, 0.65)}`;
+                this.calendarContainer.style.backgroundColor = `${this.#shadeHexColor(value.color, 0.65)}`;
                 this.clicked = comp2;
                 this.todayColor = value.color;
-                this.todayFocusColor = `${shadeHexColor(comp1, 0.7)}bb`;
+                this.todayFocusColor = `${this.#shadeHexColor(comp1, 0.7)}bb`;
                 this.dayFocusColor = `${comp2}55`;
             }
             else
@@ -143,6 +129,12 @@ export class QuantumCalendar extends Quantum
             this.todayFocusColor = "#4C0099";
             this.dayFocusColor = "#C0C0C0";
         }
+    }
+
+    #shadeHexColor(color, percent)
+    {
+        const f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+        return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
     }
 
     #addWeekDays()
@@ -195,11 +187,9 @@ export class QuantumCalendar extends Quantum
                 div += `<div class="inactive calendar-date-individual" id="d-${String(lastDateAdded).padStart(2, '0')}${String(this.month + 1).padStart(2, '0')}${this.year}"><div class="circle"></div><span class="calendar-date-number">${lastDateAdded}</span></div>`
             }
         }
-        if ((timeDifference < 5 || lastDate < 30) || (timeDifference === 5 && lastDate === 30))
-            weekFormat();
-        if (firstDay === beginsIn && lastDate === 28)
-            for (let i = 0; i < 1; i++)
-                weekFormat();
+
+        if ((timeDifference < 5 || lastDate < 30) || (timeDifference === 5 && lastDate === 30)) weekFormat();
+        if (firstDay === beginsIn && lastDate === 28) for (let i = 0; i < 1; i++) weekFormat();
 
         this.calendarCurrentDate.innerText = `${this.languages[language]['months'][this.month]}`;
         this.calendarCurrentYear.value = this.year;
@@ -211,10 +201,12 @@ export class QuantumCalendar extends Quantum
             const circle = this.today.querySelector('.circle');
             if (circle) circle.style.backgroundColor = this.todayColor;
         }
-        if (this.selectedID){
-            let selected = this.mainElement.querySelector(`#${this.selectedID}`);
-            if (selected){
-                let circle = selected.querySelector(".circle");
+        if (this.selectedID)
+        {
+            const selected = this.mainElement.querySelector(`#${this.selectedID}`);
+            if (selected)
+            {
+                const circle = selected.querySelector(".circle");
                 circle.classList.add("clicked");
                 circle.style.borderColor = this.clicked;
             }
@@ -281,20 +273,6 @@ export class QuantumCalendar extends Quantum
         })
     }
 
-    setDateFormat(date){
-        const language = this.getAttribute('language');
-        const format = this.getAttribute('format');
-        const actualMonth = parseInt(date.substring(4,6)) +1;
-        const actualDay = new Date(`${date.substring(6,10)}-${String(actualMonth.toString()).padStart(2,'0')}-${date.substring(2,4)}`).getDay()
-        this.dateFormat = format.replace('dddd', this.languages[language]['days'][actualDay+1===7 ? 0 : actualDay+1]).replace('dd', date.substring(2,4)).replace('mmmm', this.languages[language]['months'][parseInt(date.substring(4,6))]).replace('mm', String(actualMonth.toString()).padStart(2,'0') ).replace('yyyy', date.substring(6,10)).replace('yy', date.substring(8,10));
-        this.selectedID = date;
-    }
-
-    getDateFormat(){
-        if (this.dateFormat)return this.dateFormat;
-        else return "NO HAY FECHA";
-    }
-
     #daysEvent()
     {
         const calendarDates = this.mainElement.querySelectorAll(".calendar-date-individual");
@@ -319,9 +297,8 @@ export class QuantumCalendar extends Quantum
                     const clickedCircle = this.mainElement.querySelector(".clicked");
                     clickedCircle.style.borderColor = this.clicked;
                 }
-                this.setDateFormat(date.getAttribute('id'))
-                if (this.getAttribute('input') === 'true')
-                    this.calendarInput.value = this.dateFormat();
+                this.setDate(date.getAttribute('id'))
+                if (this.getAttribute('input') === 'true') this.calendarInput.value = this.setDate();
             });
         });
     }
@@ -335,13 +312,34 @@ export class QuantumCalendar extends Quantum
             this.mainElement.addEventListener("mouseover", () => {this.calendarContainer.style.display = 'block';})
             this.mainElement.addEventListener("mouseout", () => {this.calendarContainer.style.display = 'none';})
         }
-        else
-            this.calendarInput.style.display = 'none';
+        else this.calendarInput.style.display = 'none';
+    }
+
+    getDate()
+    {
+        if (this.selectedDate) return this.selectedDate;
+        else return "No date selected.";
+    }
+
+    setDate(date)
+    {
+        this.selectedID = date;
+        const dayNumber = date.substring(2, 4);
+        const yearFull = date.substring(6, 10);
+        const yearShort = date.substring(8, 10);
+        const actualMonth = parseInt(date.substring(4, 6)) + 1;
+        const actualDay = new Date(`${date.substring(6, 10)}-${String(actualMonth.toString()).padStart(2, '0')}-${date.substring(2, 4)}`).getDay();
+        const monthNumber = String(actualMonth.toString()).padStart(2, '0');
+        const {days, months} = this.languages[this.getAttribute('language')];
+        const day = days[(actualDay + 1) % 7];
+        const month = months[parseInt(date.substring(4, 6))];
+        this.selectedDate = this.getAttribute('format').replace('dddd', day).replace('dd', dayNumber)
+            .replace('mmmm', month).replace('mm', monthNumber).replace('yyyy', yearFull).replace('yy', yearShort);
     }
 
     async connectedCallback()
     {
-        await this.#render(await this.#getCss());
+        this.#render(await this.#getCss());
         this.#applyProps()
         this.#addWeekDays();
         this.#addDays();
@@ -363,8 +361,3 @@ export class QuantumCalendar extends Quantum
 }
 
 customElements.define('quantum-calendar', QuantumCalendar);
-
-function shadeHexColor(color, percent) {
-    var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
-    return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
-}
