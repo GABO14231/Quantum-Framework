@@ -14,7 +14,7 @@ export const QuantumWait = class extends Quantum {
         template.innerHTML = `
         <div>
             <img src="" class="QuantumWaitIcon" style="width: 50px; height: 50px;" />
-        </div>                
+        </div>
         `;
         return template;
     }
@@ -67,12 +67,11 @@ export const QuantumWait = class extends Quantum {
 
     async updateIcon() {
         const iconName = this.getAttribute('icon-name');
-        const svgText = await this.getSVG(iconName);
+        const svgURL = await this.getSVG(iconName); // Get the SVG URL
         const imgElement = this.shadowRoot.querySelector('.QuantumWaitIcon');
-        if (svgText) {
-            const svgBlob = new Blob([svgText], { type: 'image/svg+xml' });
-            const url = URL.createObjectURL(svgBlob);
-            imgElement.src = url;
+
+        if (svgURL) {
+            imgElement.src = svgURL; // Set the src to the URL
         } else {
             imgElement.src = '';
         }

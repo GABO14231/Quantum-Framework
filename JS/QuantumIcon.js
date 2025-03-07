@@ -50,25 +50,35 @@ export const QuantumIcon = class extends Quantum {
     }
 
     async applyStyles(cssFileName) {
-        const cssText = await this.getCssFile(cssFileName);
-        if (cssText) {
-            const styleElement = document.createElement('style');
-            styleElement.textContent = cssText;
-            this.shadowRoot.appendChild(styleElement);
-            this.styleLoaded = true;
-            this.shadowRoot.appendChild(this.QuantumIcon)
-            this.updateAttributes();
-        }
-        else {
-            throw new Error(`Failed to load CSS: ${cssFileName}`);
+        try {
+            const cssText = await this.getCssFile(cssFileName);
+            if (cssText) {
+                const styleElement = document.createElement('style');
+                styleElement.textContent = cssText;
+                this.shadowRoot.appendChild(styleElement);
+                this.styleLoaded = true;
+                this.shadowRoot.appendChild(this.QuantumIcon)
+                this.updateAttributes();
+            }
+            else {
+                throw new Error(`Failed to load CSS: ${cssFileName}`);
+            }
+        } catch (error) {
+            console.error("Error applying CSS file:", error);
         }
     }
 
     async getSVGIcon(iconName) {
         if (!iconName) return '';
         try {
-            const svgText = await this.getSVG(iconName);
-            if (!svgText) return '';
+            const svgURL = await this.getSVG(iconName);
+            if (!svgURL) return '';
+
+            const response = await fetch(svgURL);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch SVG: ${svgURL}`);
+            }
+            const svgText = await response.text();
 
             const tempDiv = document.createElement("div");
             tempDiv.innerHTML = svgText;
@@ -125,7 +135,7 @@ export const QuantumIcon = class extends Quantum {
     async updateIcon() {
         const iconName = this.getAttribute('icon-name');
         const svgElement = this.shadowRoot.querySelector('.QuantumIcon');
-        svgElement.innerHTML = await this.getSVG(iconName);
+        svgElement.innerHTML = await this.getSVGIcon(iconName);
     }
 
     updateCaption() {
