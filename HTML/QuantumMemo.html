@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const b = await quantum.createInstance("QuantumMemo",
+                {
+                    id: 'jsMemo',
+                    caption: 'Memo Test via JS!'
+                });
+                b.built = () => {console.log('Built Component!');};
+                b.addToBody();
+                const c = await quantum.createInstance("QuantumButton",
+                {
+                    id: 'captionButton',
+                    caption: 'Add Text',
+                    style: {'margin': 'auto', 'margin-bottom': '10px'},
+                    events: {click: () => b.addContent()}
+                });
+                c.addToBody();
+                const d = await quantum.createInstance("QuantumButton",
+                {
+                    id: 'clearButton',
+                    caption: 'Clear Text',
+                    style: {'margin': 'auto', 'margin-bottom': '10px'},
+                    events: {click: () => b.clearContent()}
+                });
+                d.addToBody();
+                const e = quantum.getInstance("htmlMemo");
+                const f = quantum.getInstance("htmlAdd");
+                const g = quantum.getInstance("htmlClear");
+                f.addEventListener("click", () => {e.addContent()},);
+                g.addEventListener("click", () => {e.clearContent()},);
+            };
+        </script>
+        <quantum-memo id="htmlMemo" caption="Memo Test via HTML!"></quantum-memo>
+        <quantum-button id="htmlAdd" caption="Add Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
+        <quantum-button id="htmlClear" caption="Clear Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
+    </body>
+</html>
