@@ -29,15 +29,26 @@
                     events: {click: () => b.clearContent()}
                 });
                 d.addToBody();
-                const e = quantum.getInstance("htmlMemo");
-                const f = quantum.getInstance("htmlAdd");
-                const g = quantum.getInstance("htmlClear");
-                f.addEventListener("click", () => {e.addContent()},);
-                g.addEventListener("click", () => {e.clearContent()},);
+                const e = await quantum.createInstance("QuantumButton",
+                {
+                    id: 'selectButton',
+                    caption: 'Selected Text',
+                    style: {'margin': 'auto', 'margin-bottom': '10px'},
+                    events: {click: () => b.getSelected()}
+                });
+                e.addToBody();
+                const f = quantum.getInstance("htmlMemo");
+                const g = quantum.getInstance("htmlAdd");
+                const h = quantum.getInstance("htmlClear");
+                const i = quantum.getInstance("htmlSelect");
+                g.addEventListener("click", () => {f.addContent()},);
+                h.addEventListener("click", () => {f.clearContent()},);
+                i.addEventListener("click", () => {f.getSelected()},);
             };
         </script>
         <quantum-memo id="htmlMemo" caption="Memo Test via HTML!"></quantum-memo>
         <quantum-button id="htmlAdd" caption="Add Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
         <quantum-button id="htmlClear" caption="Clear Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
+        <quantum-button id="htmlSelect" caption="Selected Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
     </body>
 </html>

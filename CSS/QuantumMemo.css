@@ -5,10 +5,10 @@
     align-items: center;
     justify-content: center;
     font-family: 'Segoe UI', sans-serif;
-    border-radius: 2em;
     border: solid;
     width: 300px;
     height: 100px;
-    cursor: pointer;
     margin-bottom: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
 }
