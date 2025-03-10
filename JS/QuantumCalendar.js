@@ -240,7 +240,7 @@ export class QuantumCalendar extends Quantum
                 if (previousClicked) previousClicked.classList.remove("clicked");
                 date.classList.add("clicked");
                 this.setDate(date.getAttribute('id'))
-                if (this.getAttribute('input') === 'true') this.calendarInput.value = this.setDate();
+                if (this.getAttribute('input') === 'true') this.calendarInput.value = this.getDate();
             });
         });
     }
