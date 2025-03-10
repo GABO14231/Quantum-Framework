@@ -53,7 +53,8 @@ export class QuantumCalendar extends Quantum
         this.calendarDates = this.mainElement.querySelector(".calendar-dates");
     }
 
-    async #renderCSSTemplate (css){
+    async #renderCSSTemplate(css)
+    {
         const aditionalSheet = new CSSStyleSheet();
         aditionalSheet.replaceSync(await this.#getCss(css));
         this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, aditionalSheet]
@@ -65,9 +66,7 @@ export class QuantumCalendar extends Quantum
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'style') {
-                    this.#renderCSSTemplate(value);
-                }
+                if (key === 'style') this.#renderCSSTemplate(value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
                 else if (key === 'newLanguage' && this.props['language']) this.languages[this.props['language']] = value;
@@ -156,14 +155,12 @@ export class QuantumCalendar extends Quantum
         this.calendarCurrentYear.value = this.year;
         this.calendarDates.innerHTML = div;
         this.today = this.mainElement.querySelector(`#d-${String(this.date.getDate()).padStart(2,'0')}${String(new Date().getMonth()).padStart(2,'0')}${new Date().getFullYear()}`);
-        if (this.today)
-            this.today.classList.add("today");
+        if (this.today) this.today.classList.add("today");
         
         if (this.selectedID)
         {
             const selected = this.mainElement.querySelector(`#${this.selectedID}`);
-            if (selected)
-                selected.classList.add("clicked");
+            if (selected) selected.classList.add("clicked");
         }
         this.#daysEvent();
     }
@@ -249,7 +246,7 @@ export class QuantumCalendar extends Quantum
     {
         if (this.getAttribute('input') === 'true')
         {
-            this.calendarContainer.style.display = 'none';
+            this.calendarInput.style.display = 'block';
             this.calendarContainer.style.position = 'absolute';
             this.mainElement.addEventListener("mouseover", () => {this.calendarContainer.style.display = 'block';})
             this.mainElement.addEventListener("mouseout", () => {this.calendarContainer.style.display = 'none';})
@@ -280,7 +277,7 @@ export class QuantumCalendar extends Quantum
 
     async connectedCallback()
     {
-        this.#render(await this.#getCss('QuantumCalendar'));
+        this.#render(await this.#getCss(this.name));
         this.#applyProps()
         this.#addWeekDays();
         this.#addDays();

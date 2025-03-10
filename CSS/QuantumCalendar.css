@@ -9,9 +9,7 @@
     margin-bottom: 20px;
 }
 
-.QuantumCalendarInput{
-    display: none;
-}
+.QuantumCalendarInput {display: none;}
 
 .calendar-container
 {
@@ -119,22 +117,10 @@ header .calendar-current-date
 
 .calendar-dates div.inactive {color: #aaa;}
 .calendar-dates div.today {color: #fff;}
-
-.today .circle{
-    background-color: #7F00FF;
-}
-
-.clicked .circle{ 
-    border-color: #FF0000;
-}
-
-.calendar-date-individual:hover .circle{
-    background-color: #C0C0C0;
-}
-
-.today:hover .circle{
-    background-color: #4C0099;
-}
+.today .circle {background-color: #7F00FF;}
+.clicked .circle {border-color: #FF0000;}
+.calendar-date-individual:hover .circle {background-color: #C0C0C0;}
+.today:hover .circle {background-color: #4C0099;}
 
 .circle
 {
