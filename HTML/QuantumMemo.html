@@ -41,12 +41,12 @@
                 const g = quantum.getInstance("htmlAdd");
                 const h = quantum.getInstance("htmlClear");
                 const i = quantum.getInstance("htmlSelect");
-                g.addEventListener("click", () => {f.addContent()},);
+                g.addEventListener("click", () => {f.addContent("Memo Test via HTML!")},);
                 h.addEventListener("click", () => {f.clearContent()},);
                 i.addEventListener("click", () => {f.getSelected()},);
             };
         </script>
-        <quantum-memo id="htmlMemo" caption="Memo Test via HTML!"></quantum-memo>
+        <quantum-memo id="htmlMemo"></quantum-memo>
         <quantum-button id="htmlAdd" caption="Add Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
         <quantum-button id="htmlClear" caption="Clear Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
         <quantum-button id="htmlSelect" caption="Selected Text" style="margin: auto; margin-bottom: 10px"></quantum-button>

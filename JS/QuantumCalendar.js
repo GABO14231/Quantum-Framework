@@ -298,7 +298,7 @@ export class QuantumCalendar extends Quantum
                     clickedCircle.style.borderColor = this.clicked;
                 }
                 this.setDate(date.getAttribute('id'))
-                if (this.getAttribute('input') === 'true') this.calendarInput.value = this.setDate();
+                if (this.getAttribute('input') === 'true') this.calendarInput.value = this.getDate();
             });
         });
     }

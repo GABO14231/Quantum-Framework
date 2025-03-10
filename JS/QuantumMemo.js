@@ -45,7 +45,12 @@ export class QuantumMemo extends Quantum
             });
     }
 
-    addContent() {this.mainElement.innerHTML += `${this.getAttribute('caption')}<br/>`;}
+    addContent(string)
+    {
+        if (string) this.mainElement.innerHTML += `${string}<br/>`;
+        else this.mainElement.innerHTML += `${this.getAttribute('caption')}<br/>`;
+    }
+
     clearContent() {this.mainElement.innerHTML = '';}
     getLine(){}
     getSelected()
