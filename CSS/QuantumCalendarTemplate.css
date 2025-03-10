@@ -1,0 +1,55 @@
+/* Contenedor del calendario, exceptuando el input */
+.calendar-container{
+    background-color: #8ae0ab;
+}
+
+/* Input unicamente */
+.QuantumCalendarInput{
+    background-color: #8ae0ab;
+}
+
+/* Mes y fondo del mes y año */
+.calendar-header
+{
+    color: #052b10;
+}
+
+/* Año */
+.calendar-header input{
+    color: #052b10;
+}
+
+/* Días de la semana */
+.calendar-weekdays{
+    color: #052b10;
+}
+
+/* Números del calendario */
+.calendar-dates div{
+    color: #004e17;
+}
+
+/* Números del calendario de días que no corresponden al mes */
+.calendar-dates div.inactive {
+    color: #303431;
+}  
+
+/* Números del calendario al pasar el mouse por encima */
+.calendar-date-individual:hover .circle{
+    background-color: #548868;
+}
+
+/* Números del calendario al darle click */
+.clicked .circle{ 
+    border-color: #940998;
+}
+
+/* Número del calendario del día actual */
+.today .circle{
+    background-color: #3747cf;
+}
+
+/* Número del calendario del día actual al pasar el mouse por encima */
+.today:hover .circle{
+    background-color: #252e80;
+}
