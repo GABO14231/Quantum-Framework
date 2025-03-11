@@ -10,7 +10,7 @@ export class QuantumButton extends Quantum
         this.built = () => {};
     }
 
-    async #getCss() {return await quantum.getCssFile("QuantumButton");}
+    async #getCss() {return await quantum.getCssFile(this.name);}
 
     #render(css)
     {

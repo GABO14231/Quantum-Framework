@@ -29,7 +29,7 @@ export class QuantumCombo extends Quantum
         `;
     }
 
-    async #getCss() {return await quantum.getCssFile("QuantumCombo");}
+    async #getCss() {return await quantum.getCssFile(this.name);}
 
     #render(css)
     {

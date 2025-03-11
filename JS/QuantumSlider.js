@@ -17,7 +17,7 @@ export class QuantumSlider extends Quantum
         this.autoplayInterval = null;
     }
 
-    async #getCss() {return await quantum.getCssFile("QuantumSlider");}
+    async #getCss() {return await quantum.getCssFile(this.name);}
     async #getSVG(fileName) {return await quantum.getSVG(fileName);}
 
     #getTemplate()

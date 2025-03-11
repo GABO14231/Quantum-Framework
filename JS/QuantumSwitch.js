@@ -19,7 +19,7 @@ export class QuantumSwitch extends Quantum
         `;
     }
 
-    async #getCss() {return await quantum.getCssFile("QuantumSwitch");}
+    async #getCss() {return await quantum.getCssFile(this.name);}
 
     #render(css)
     {

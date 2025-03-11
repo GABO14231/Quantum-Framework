@@ -31,5 +31,5 @@
     cursor: pointer;
 }
 
-.QuantumButton:disabled { opacity: 0.3; }
-.QuantumButton:enabled { opacity: 1; }
+.QuantumButton:disabled {opacity: 0.3;}
+.QuantumButton:enabled {opacity: 1;}

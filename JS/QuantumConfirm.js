@@ -22,7 +22,7 @@ export class QuantumConfirm extends Quantum
         `;
     }
 
-    async #getCss() {return await quantum.getCssFile("QuantumConfirm");}
+    async #getCss() {return await quantum.getCssFile(this.name);}
     async #getSVG(fileName) {return await quantum.getSVG(fileName)}
 
     #render(css)

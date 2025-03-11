@@ -13,42 +13,50 @@
                 });
                 b.built = () => {console.log('Built Component!');};
                 b.addToBody();
-                const c = await quantum.createInstance("QuantumButton",
+
+                const div = document.createElement('div');
+                Object.assign(div.style, {display: 'flex', justifyContent: 'center', marginBottom: '10px', paddingLeft: '10px'});
+                quantum.addToBody(div);
+
+                const buttonConfigs =
+                [
+                    {id: 'captionButton', caption: 'Add Text', events: {click: () => b.addContent()}},
+                    {id: 'clearButton', caption: 'Clear Text', events: {click: () => b.clearContent()}},
+                    {id: 'selectButton', caption: 'Selected Text', events: {click: () => b.getSelected()}},
+                    {id: 'addButton2', caption: 'Add Other Text', events: {click: () => b.addContent("This is an JS Test!")}},
+                    {id: 'getLine', caption: 'Get Line', events: {click: () => b.getLine("This is an")}}
+                ];
+                for (const config of buttonConfigs) 
                 {
-                    id: 'captionButton',
-                    caption: 'Add Text',
-                    style: {'margin': 'auto', 'margin-bottom': '10px'},
-                    events: {click: () => b.addContent()}
-                });
-                c.addToBody();
-                const d = await quantum.createInstance("QuantumButton",
-                {
-                    id: 'clearButton',
-                    caption: 'Clear Text',
-                    style: {'margin': 'auto', 'margin-bottom': '10px'},
-                    events: {click: () => b.clearContent()}
-                });
-                d.addToBody();
-                const e = await quantum.createInstance("QuantumButton",
-                {
-                    id: 'selectButton',
-                    caption: 'Selected Text',
-                    style: {'margin': 'auto', 'margin-bottom': '10px'},
-                    events: {click: () => b.getSelected()}
-                });
-                e.addToBody();
-                const f = quantum.getInstance("htmlMemo");
-                const g = quantum.getInstance("htmlAdd");
-                const h = quantum.getInstance("htmlClear");
-                const i = quantum.getInstance("htmlSelect");
-                g.addEventListener("click", () => {f.addContent("Memo Test via HTML!")},);
-                h.addEventListener("click", () => {f.clearContent()},);
-                i.addEventListener("click", () => {f.getSelected()},);
+                    const button = await quantum.createInstance("QuantumButton",
+                    {
+                        id: config.id,
+                        caption: config.caption,
+                        style: {'display': 'inline-flex', 'margin-right': '10px'},
+                        events: config.events
+                    });
+                    div.appendChild(button);
+                }
+
+                const h = quantum.getInstance("htmlMemo");
+                const htmlButtons =
+                [
+                    {id: 'htmlAdd', event: () => h.addContent()},
+                    {id: 'htmlClear', event: () => h.clearContent()},
+                    {id: 'htmlSelect', event: () => h.getSelected()},
+                    {id: 'htmlAddOther', event: () => h.addContent("This is an HTML Test!")},
+                    {id: 'htmlGetLine', event: () => h.getLine("This is an")}
+                ]
+                for (const button of htmlButtons) quantum.getInstance(button.id).addEventListener("click", button.event);
             };
         </script>
-        <quantum-memo id="htmlMemo"></quantum-memo>
-        <quantum-button id="htmlAdd" caption="Add Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
-        <quantum-button id="htmlClear" caption="Clear Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
-        <quantum-button id="htmlSelect" caption="Selected Text" style="margin: auto; margin-bottom: 10px"></quantum-button>
+        <quantum-memo id="htmlMemo" caption="Memo Test via HTML!"></quantum-memo>
+        <div style="display: flex; justify-content: center; margin-bottom: 10px; padding-left: 10px;">
+            <quantum-button id="htmlAdd" caption="Add Text" style="display: inline-flex; margin-right: 5px"></quantum-button>
+            <quantum-button id="htmlClear" caption="Clear Text" style="display: inline-flex; margin-right: 5px"></quantum-button>
+            <quantum-button id="htmlSelect" caption="Selected Text" style="display: inline-flex; margin-right: 5px"></quantum-button>
+            <quantum-button id="htmlAddOther" caption="Add Other Text" style="display: inline-flex; margin-right: 5px"></quantum-button>
+            <quantum-button id="htmlGetLine" caption="Get Line" style="display: inline-flex; margin-right: 5px"></quantum-button>
+        </div>
     </body>
 </html>

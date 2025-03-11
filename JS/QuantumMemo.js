@@ -50,9 +50,19 @@ export class QuantumMemo extends Quantum
         if (string) this.mainElement.innerHTML += `${string}<br/>`;
         else this.mainElement.innerHTML += `${this.getAttribute('caption')}<br/>`;
     }
-
     clearContent() {this.mainElement.innerHTML = '';}
-    getLine(){}
+
+    getLine(string)
+    {
+        const divContents = this.mainElement.innerHTML;
+        if (divContents.indexOf(string) !== -1)
+        {
+            let index = divContents.indexOf(string);
+            console.log('Found line: ' + divContents.substring(index, divContents.indexOf("<br>", index)))
+        }
+        else console.log("The text was not found.")
+    }
+
     getSelected()
     {
         const selectedText = document.getSelection().toString();

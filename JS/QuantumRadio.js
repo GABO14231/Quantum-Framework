@@ -3,6 +3,7 @@ export class QuantumRadio extends Quantum
     constructor(props)
     {
         super();
+        this.name = "QuantumRadio"
         this.props = props;
         if (props?.id) this.id = props.id;
         this.attachShadow({mode: 'open'});
@@ -21,7 +22,7 @@ export class QuantumRadio extends Quantum
         `;
     }
 
-    async #getCss() {return await quantum.getCssFile("QuantumRadio");}
+    async #getCss() {return await quantum.getCssFile(this.name);}
 
     #render(css)
     {
