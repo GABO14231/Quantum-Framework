@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+        <title>QuantumGrid</title>
+    </head>
+    <body>
+        <script>
+
+           dataJSON = {
+                "rowsNumber" : 10,
+                "columnsNumber" : 6,
+                "title" : "Concesionaria Capibara",
+                "subtitle": "Los mejores vehiculos del mercado",
+                "columns": ["Fila","Identificacion","Fabricante","Modelo","Año","Precio"],
+                "data" : [{"Fila":1,"Identificacion":"1FTWW3A5XAE608887","Fabricante":"Chrysler","Modelo":"LHS","Año":2001,"Precio":"$50250.76"},
+                {"Fila":2,"Identificacion":"1G6DJ577880898277","Fabricante":"Suzuki","Modelo":"Swift","Año":2000,"Precio":"$54178.92"},
+                {"Fila":3,"Identificacion":"1GD12XEG1FF290246","Fabricante":"Alfa Romeo","Modelo":"164","Año":1992,"Precio":"$59522.21"},
+                {"Fila":4,"Identificacion":"1GD22ZCG2DZ097828","Fabricante":"Chevrolet","Modelo":"Express 1500","Año":2000,"Precio":"$64136.44"},
+                {"Fila":5,"Identificacion":"WAUGGAFC3DN762505","Fabricante":"Buick","Modelo":"Skylark","Año":1993,"Precio":"$62173.58"},
+                {"Fila":6,"Identificacion":"3VW467AT0CM833071","Fabricante":"Dodge","Modelo":"Grand Caravan","Año":2010,"Precio":"$36177.14"},
+                {"Fila":7,"Identificacion":"JTHKD5BH2F2506034","Fabricante":"Volkswagen","Modelo":"Golf","Año":1992,"Precio":"$22501.70"},
+                {"Fila":8,"Identificacion":"ML32A3HJ9FH783949","Fabricante":"Mitsubishi","Modelo":"Chariot","Año":1987,"Precio":"$59166.24"},
+                {"Fila":9,"Identificacion":"1G4HP57297U202708","Fabricante":"Bentley","Modelo":"Continental","Año":2009,"Precio":"$58226.38"},
+                {"Fila":10,"Identificacion":"WAUKF98EX6A024270","Fabricante":"Mitsubishi","Modelo":"Diamante","Año":2000,"Precio":"$61074.84"},
+                {"Fila":11,"Identificacion":"WBAVL1C58EV810672","Fabricante":"Dodge","Modelo":"Ram 3500","Año":2009,"Precio":"$24090.37"},
+                {"Fila":12,"Identificacion":"JA32X8HW7AU698224","Fabricante":"Ford","Modelo":"Transit Connect","Año":2011,"Precio":"$30683.83"},
+                {"Fila":13,"Identificacion":"WBXPA93424W175807","Fabricante":"Kia","Modelo":"Sorento","Año":2011,"Precio":"$40559.12"},
+                {"Fila":14,"Identificacion":"1GYS4DEF0ER416631","Fabricante":"Cadillac","Modelo":"Fleetwood","Año":1994,"Precio":"$43629.39"},
+                {"Fila":15,"Identificacion":"2C3CCABG7FH134064","Fabricante":"Hyundai","Modelo":"Tiburon","Año":2001,"Precio":"$34377.66"},
+                {"Fila":16,"Identificacion":"JH4DC53802C673152","Fabricante":"Chevrolet","Modelo":"Silverado","Año":2007,"Precio":"$14182.03"},
+                {"Fila":17,"Identificacion":"JTDBT4K30C1503377","Fabricante":"Mitsubishi","Modelo":"Pajero","Año":2000,"Precio":"$15886.60"},
+                {"Fila":18,"Identificacion":"WVGAV7AX2FW304992","Fabricante":"Suzuki","Modelo":"Forenza","Año":2007,"Precio":"$58838.02"},
+                {"Fila":19,"Identificacion":"3VWJP7AT3CM154430","Fabricante":"Chevrolet","Modelo":"Camaro","Año":2000,"Precio":"$53279.88"},
+                {"Fila":20,"Identificacion":"WVWAA7AH7AV011855","Fabricante":"Chevrolet","Modelo":"Sportvan G30","Año":1993,"Precio":"$10909.61"},
+                {"Fila":21,"Identificacion":"WBASP4C58BC861248","Fabricante":"Mazda","Modelo":"MX-6","Año":1993,"Precio":"$45081.92"},
+                {"Fila":22,"Identificacion":"TRUSC28N521088803","Fabricante":"Pontiac","Modelo":"Sunbird","Año":1994,"Precio":"$15879.64"},
+                {"Fila":23,"Identificacion":"3VW217AU1FM205278","Fabricante":"Ford","Modelo":"E150","Año":2011,"Precio":"$27763.09"},
+                {"Fila":24,"Identificacion":"WAU4GBFB0BN060543","Fabricante":"Hyundai","Modelo":"Accent","Año":2007,"Precio":"$68512.18"},
+                {"Fila":25,"Identificacion":"JM1CW2BL9C0432590","Fabricante":"Infiniti","Modelo":"EX","Año":2009,"Precio":"$50028.92"},
+                {"Fila":26,"Identificacion":"1D7RE3BK1AS539912","Fabricante":"Nissan","Modelo":"Quest","Año":2002,"Precio":"$54579.39"},
+                {"Fila":27,"Identificacion":"JTEBU5JR5F5917997","Fabricante":"Chevrolet","Modelo":"S10","Año":2000,"Precio":"$50663.49"},
+                {"Fila":28,"Identificacion":"3VW507AT4EM969714","Fabricante":"Plymouth","Modelo":"Voyager","Año":1994,"Precio":"$18942.64"},
+                {"Fila":29,"Identificacion":"WBANV13528B390357","Fabricante":"Ford","Modelo":"Fairlane","Año":1965,"Precio":"$46434.51"},
+                {"Fila":30,"Identificacion":"JTEBC3EH5D2743047","Fabricante":"Dodge","Modelo":"Nitro","Año":2010,"Precio":"$71910.61"},
+                {"Fila":31,"Identificacion":"WBAWC33559P700916","Fabricante":"Honda","Modelo":"CR-V","Año":2003,"Precio":"$57017.47"},
+                {"Fila":32,"Identificacion":"WAUHGBFC3DN794915","Fabricante":"Suzuki","Modelo":"Daewoo Lacetti","Año":2007,"Precio":"$11719.03"},
+                {"Fila":33,"Identificacion":"2T1BURHE7EC091959","Fabricante":"Porsche","Modelo":"Boxster","Año":1997,"Precio":"$44636.15"},
+                {"Fila":34,"Identificacion":"1C3CDFBB9ED011358","Fabricante":"Ford","Modelo":"F250","Año":1997,"Precio":"$51383.49"},
+                {"Fila":35,"Identificacion":"2G61R5S32F9131608","Fabricante":"Suzuki","Modelo":"XL-7","Año":2004,"Precio":"$22390.13"},
+                {"Fila":36,"Identificacion":"1FAHP3GN0AW182563","Fabricante":"Mitsubishi","Modelo":"Eclipse","Año":2006,"Precio":"$35335.20"},
+                {"Fila":37,"Identificacion":"1N4AL3AP4DC750682","Fabricante":"Chevrolet","Modelo":"Venture","Año":1998,"Precio":"$10816.11"},
+                {"Fila":38,"Identificacion":"WBA4B1C55FD155683","Fabricante":"Nissan","Modelo":"Rogue","Año":2010,"Precio":"$51680.82"},
+                {"Fila":39,"Identificacion":"1GT01ZCG7CF907484","Fabricante":"Toyota","Modelo":"Tacoma","Año":2012,"Precio":"$22303.94"},
+                {"Fila":40,"Identificacion":"SCBCP7ZA9AC776403","Fabricante":"Volvo","Modelo":"S40","Año":2005,"Precio":"$35207.21"},
+                {"Fila":41,"Identificacion":"WAUGVAFR4AA808405","Fabricante":"Plymouth","Modelo":"Laser","Año":1990,"Precio":"$34233.75"},
+                {"Fila":42,"Identificacion":"1C3CDFAA7FD272885","Fabricante":"Subaru","Modelo":"XT","Año":1989,"Precio":"$68046.68"},
+                {"Fila":43,"Identificacion":"WBABW33464P842925","Fabricante":"Nissan","Modelo":"Xterra","Año":2000,"Precio":"$64430.55"},
+                {"Fila":44,"Identificacion":"WA1CKBFP1AA697224","Fabricante":"Buick","Modelo":"Estate","Año":1989,"Precio":"$10281.64"},
+                {"Fila":45,"Identificacion":"SAJWA6BC8F8236120","Fabricante":"Saturn","Modelo":"Astra","Año":2008,"Precio":"$57577.34"},
+                {"Fila":46,"Identificacion":"WAUHGAFC9CN216231","Fabricante":"BMW","Modelo":"M5","Año":2010,"Precio":"$48932.55"},
+                {"Fila":47,"Identificacion":"1G6DM5EVXA0878045","Fabricante":"Kia","Modelo":"Spectra","Año":2002,"Precio":"$63682.36"},
+                {"Fila":48,"Identificacion":"WBADX1C52BE020621","Fabricante":"Chevrolet","Modelo":"Lumina","Año":1994,"Precio":"$53979.62"},
+                {"Fila":49,"Identificacion":"1N6AD0CU6EN830299","Fabricante":"Mazda","Modelo":"626","Año":1986,"Precio":"$67867.79"},
+                {"Fila":50,"Identificacion":"19VDE1F30EE189427","Fabricante":"Ford","Modelo":"E-Series","Año":1993,"Precio":"$28376.72"}],
+                "pageSize" : 5
+            }
+
+            const quantumInit = async () =>{
+                const b = await quantum.createInstance("QuantumGrid", dataJSON);
+                b.addToBody()
+            }
+
+        </script>
+    </body>
+</html>

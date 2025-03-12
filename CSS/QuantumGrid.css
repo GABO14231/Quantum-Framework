@@ -1,0 +1,330 @@
+.QuantumGridContainer{
+    display: grid;
+    width: 90%;
+    height: 90%;
+    margin: 100px auto;
+   
+}
+
+@keyframes moveAnimation{
+    0% {
+        transform: translateX(-100%);
+    } 100%{
+        transform: translateX(100%);
+    }
+}
+
+.QuantumGridTitle{
+    grid-column: 2/6;
+    text-align: center;
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: bold;
+    font-family: Times New Roman;
+    animation: moveAnimation 5s linear infinite;
+
+}
+
+.QuantumGridSubtitle{
+    grid-row: 2;
+    grid-column: 2/6;
+    text-align:center;
+    font-size: 2.5rem;
+    font-style: italic;
+    font-family: Times New Roman;
+}
+
+.QuantumGridInformation{
+    text-align: center;
+    font-family: Times New Roman;
+    border-left: solid;
+    border-top: solid;  
+}
+
+.QuantumGridInformation:hover{
+    background-color: gold;
+}
+
+.QuantumGridElement1{
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.QuantumGridElement2{
+    grid-row: 3;
+    grid-column: 2;
+}
+
+.QuantumGridElement3{
+    grid-row: 3;
+    grid-column: 3;
+}
+
+.QuantumGridElement4{
+    grid-row: 3;
+    grid-column: 4;
+}
+
+.QuantumGridElement5{
+    grid-row: 3;
+    grid-column: 5;
+}
+
+.QuantumGridElement6{
+    grid-row: 3;
+    grid-column: 6;
+    border-right: solid;
+}
+
+.QuantumGridElement7{
+    grid-row: 4;
+    grid-column: 1;
+}
+
+.QuantumGridElement8{
+    grid-row: 4;
+    grid-column: 2;
+}
+
+.QuantumGridElement9{
+    grid-row: 4;
+    grid-column: 3;
+}
+
+.QuantumGridElement10{
+    grid-row: 4;
+    grid-column: 4;
+}
+
+.QuantumGridElement11{
+    grid-row: 4;
+    grid-column: 5;
+}
+
+.QuantumGridElement12{
+    grid-row: 4;
+    grid-column: 6;
+    border-right: solid;
+}
+
+.QuantumGridElement13{
+    grid-row: 5;
+    grid-column: 1;
+}
+
+.QuantumGridElement14{
+    grid-row: 5;
+    grid-column: 2;
+}
+
+.QuantumGridElement15{
+    grid-row: 5;
+    grid-column: 3;
+}
+
+.QuantumGridElement16{
+    grid-row: 5;
+    grid-column: 4;
+}
+
+.QuantumGridElement17{
+    grid-row: 5;
+    grid-column: 5;
+}
+
+.QuantumGridElement18{
+    grid-row: 5;
+    grid-column: 6;
+    border-right: solid;
+}
+
+.QuantumGridElement19{
+    grid-row: 6;
+    grid-column: 1;
+}
+
+.QuantumGridElement20{
+    grid-row: 6;
+    grid-column: 2;
+}
+
+.QuantumGridElement21{
+    grid-row: 6;
+    grid-column: 3;
+}
+
+.QuantumGridElement22{
+    grid-row: 6;
+    grid-column: 4;
+}
+
+.QuantumGridElement23{
+    grid-row: 6;
+    grid-column: 5;
+}
+
+.QuantumGridElement24{
+    grid-row: 6;
+    grid-column: 6;
+    border-right: solid;
+}
+
+.QuantumGridElement25{
+    grid-row: 7;
+    grid-column: 1;
+}
+
+.QuantumGridElement26{
+    grid-row: 7;
+    grid-column: 2;
+}
+
+.QuantumGridElement27{
+    grid-row: 7;
+    grid-column: 3;
+}
+
+.QuantumGridElement28{
+    grid-row: 7;
+    grid-column: 4;
+}
+
+.QuantumGridElement29{
+    grid-row: 7;
+    grid-column: 5;
+}
+
+.QuantumGridElement30{
+    grid-row: 7;
+    grid-column: 6;
+    border-right: solid;
+}
+
+.QuantumGridElement31{
+    grid-row: 8;
+    grid-column: 1;
+    border-bottom: solid;
+}
+
+.QuantumGridElement32{
+    grid-row: 8;
+    grid-column: 2;
+    border-bottom: solid;
+}
+
+.QuantumGridElement33{
+    grid-row: 8;
+    grid-column: 3;
+    border-bottom: solid;
+}
+
+.QuantumGridElement34{
+    grid-row: 8;
+    grid-column: 4;
+    border-bottom: solid;
+}
+
+.QuantumGridElement35{
+    grid-row: 8;
+    grid-column: 5;
+    border-bottom: solid;
+}
+
+.QuantumGridElement36{
+    grid-row: 8;
+    grid-column: 6;
+    border-bottom: solid;
+    border-right: solid;
+}
+
+.QuantumGridRegisterCounter{
+    grid-row: 10;
+    grid-column: 3/5;
+    border-style: solid;
+    text-align: center;
+    width: 25%;
+    height: 45%;
+    margin: 10px auto;
+    font-size: 1.3em;
+    
+}
+
+.QuantumGridRegisterNext{
+    grid-row: 10;
+    grid-column: 5;
+    justify-self: center;
+    width: 60%;
+    height: 60%;
+    margin: 10px auto;
+    border-style: solid;
+    border-right: solid;
+    cursor: pointer;
+}
+
+.QuantumGridRegisterNextPage{
+    grid-row: 10;
+    grid-column: 6;
+    justify-self: center;
+    width: 60%;
+    height: 60%;
+    margin: 10px auto;
+    border-style: solid;
+    border-right: solid;
+    cursor: pointer;
+}
+
+.QuantumGridRegisterBack{
+    grid-row: 10;
+    grid-column: 2;
+    justify-self: center;
+    width: 60%;
+    height: 60%;
+    margin: 10px auto;
+    border-style: solid;
+    border-right: solid;
+    cursor: pointer;
+}
+
+.QuantumGridRegisterBackPage{
+    grid-row: 10;
+    grid-column: 1;
+    justify-self: center;
+    width: 60%;
+    height: 60%;
+    margin: 10px auto;
+    border-style: solid;
+    border-right: solid;
+    cursor: pointer;
+}
+
+.QuantumGridRegisterNext:hover{
+    background-color: gray;
+}
+
+.QuantumGridRegisterNext:active{
+    border-color: gold;
+}
+
+.QuantumGridRegisterNextPage:hover{
+    background-color: gray;
+}
+
+.QuantumGridRegisterNextPage:active{
+    border-color: gold;
+}
+
+.QuantumGridRegisterBack:hover{
+    background-color: gray;
+}
+
+.QuantumGridRegisterBack:active{
+    border-color: gold;
+}
+
+.QuantumGridRegisterBackPage:hover{
+    background-color: gray;
+}
+
+.QuantumGridRegisterBackPage:active{
+    border-color: gold;
+}
