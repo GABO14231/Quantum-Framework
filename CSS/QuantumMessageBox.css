@@ -1,0 +1,72 @@
+.QuantumMessageBoxContainer{
+    display: grid;
+    position: absolute;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(7, 0.35fr);
+    border-width : 1.5px;
+    border-style: solid;
+    border-color :  black;
+    align-items : center;
+    justify-content: center;
+    background-color: beige;
+}
+
+.QuantumMessageBoxTitle{
+    grid-row: 1;
+    grid-column: 1;
+    font-family: 'Times New Roman';
+    font-size: 0.85em;
+}
+
+
+.QuantumMessageBoxExit{
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: right;
+    align-self: start;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.QuantumMessageBoxExit:hover{
+    background-color: red;
+    color: white;
+}
+.QuantumMessageBoxExit:active{
+    background-color: rgb(180, 0, 0);
+}
+
+.QuantumMessageBoxTitleContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    align-self: start;
+
+    grid-row: 1;
+    grid-column: 1/-1;
+    border-bottom: black solid;
+    border-width: 1.5px;
+    background-color: white;
+}
+
+.QuantumMessageBoxInformation{
+    grid-row: 3/5;
+    grid-column: 2/-1;
+    font-family: 'Times New Roman';
+    padding-right: 1em;
+}
+
+.QuantumMessageBoxIcon{
+    grid-row: 3/5;
+    grid-column: 1;
+    width: 35px;
+    height: 35px;
+    justify-self: center;
+}
+
+.QuantumMessageBoxButton{
+    grid-row: 6;
+    grid-column: 2;
+    cursor: pointer;
+}
