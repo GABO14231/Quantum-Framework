@@ -9,7 +9,8 @@
                 const b = await quantum.createInstance("QuantumMemo",
                 {
                     id: 'jsMemo',
-                    caption: 'Memo Test via JS!'
+                    caption: 'Memo Test via JS!',
+                    enabled: true
                 });
                 b.built = () => {console.log('Built Component!');};
                 b.addToBody();

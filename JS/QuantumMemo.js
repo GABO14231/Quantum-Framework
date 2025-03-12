@@ -10,7 +10,7 @@ export class QuantumMemo extends Quantum
         this.built = () => {};
     }
 
-    async #getCss() {return await quantum.getCssFile("QuantumMemo");}
+    async #getCss() {return await quantum.getCssFile(this.name);}
 
     #render(css)
     {
@@ -27,7 +27,8 @@ export class QuantumMemo extends Quantum
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'style') Object.assign(this.mainElement.style, value);
+                if (key === 'enabled') this.mainElement.contentEditable = value;
+                else if (key === 'style') Object.assign(this.mainElement.style, value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
                 else {this[key] = value; this.setAttribute(key, value);}
@@ -36,6 +37,11 @@ export class QuantumMemo extends Quantum
         else
             this.getAttributeNames().forEach(attr =>
             {
+                if (attr === 'enabled')
+                {
+                    const value = this.getAttribute(attr);
+                    this.mainElement.contentEditable = value;
+                }
                 if (!attr.startsWith("on"))
                 {
                     const value = this.getAttribute(attr);
@@ -47,6 +53,7 @@ export class QuantumMemo extends Quantum
 
     addContent(string)
     {
+        if (this.mainElement.innerHTML != '') this.mainElement.innerHTML += `<br/>`
         if (string) this.mainElement.innerHTML += `${string}<br/>`;
         else this.mainElement.innerHTML += `${this.getAttribute('caption')}<br/>`;
     }

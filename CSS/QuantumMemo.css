@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     font-family: 'Segoe UI', sans-serif;
     border: solid;
     width: 300px;
