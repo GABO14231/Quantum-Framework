@@ -52,7 +52,7 @@ export class QuantumCombo extends Quantum
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'master') this.addOption({option: 'JS Master', value: 0, master: true});
+                if (key === 'master') this.addOption({group: this.id, option: 'JS Master', value: 0, master: true});
                 else if (key === 'style') Object.assign(this.mainElement.style, value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
@@ -95,71 +95,15 @@ export class QuantumCombo extends Quantum
         };
     }
 
-    getSelected() {return this._options.filter(item => !item.master && item.checkBox.checked);}
-    getDiselected() {return this._options.filter(item => !item.master && !item.checkBox.checked);}
-
-    checking(Obj)
-    {
-        if (Obj.classList.contains('master-check'))
-        {
-            const isChecked = Obj.checked;
-            this._options.forEach(option =>
-            {
-                if (!option.master)
-                {
-                    option.checkBox.checked = isChecked;
-                    option.sts = isChecked ? 1 : 0;
-                }
-            });
-            Obj.indeterminate = false;
-        } 
-        else
-        {
-            let allChecked = true;
-            let allUnchecked = true;
-            let masterItem = null;
-
-            this._options.forEach(option =>
-            {
-                if (!option.master)
-                {
-                    allChecked = allChecked && option.checkBox.checked;
-                    allUnchecked = allUnchecked && !option.checkBox.checked;
-                }
-                else
-                    masterItem = option;
-            });
-
-            if (masterItem)
-            {
-                if (allChecked)
-                {
-                    masterItem.checkBox.checked = true;
-                    masterItem.checkBox.indeterminate = false;
-                    masterItem.sts = 1;
-                }
-                else if (allUnchecked)
-                {
-                    masterItem.checkBox.checked = false;
-                    masterItem.checkBox.indeterminate = false;
-                    masterItem.sts = 0;
-                }
-                else
-                {
-                    masterItem.checkBox.checked = false;
-                    masterItem.checkBox.indeterminate = true;
-                    masterItem.sts = -1;
-                }
-            }
-        }
-    }
+    getSelected() {return this._options.filter(item => !item.master && item.quantumCheckBox.checked);}
+    getDiselected() {return this._options.filter(item => !item.master && item.quantumCheckBox.checked);}
 
     async addOption(option)
     {
         const toggleCheck = () =>
         {
-            option.checkBox.checked = !option.checkBox.checked;
-            this.checking(option.checkBox);
+            option.quantumCheckBox.checked = !option.quantumCheckBox.checked;
+            option.quantumCheckBox.checking();
             this.inputElement.value = this.getSelected().map(opt => opt.option).join(' | ');
             this.labelElement.style.animationName = this.inputElement.value.trim() ? 'labelUp' : '';
         };
@@ -171,11 +115,13 @@ export class QuantumCombo extends Quantum
         if (this.props?.id) {value = this.props.id;}
         else {value = this.getAttribute('id');}
 
-        option.checkBox = document.createElement('input');
-        option.checkBox.setAttribute('type', 'checkbox');
-        option.checkBox.style.position = "relative";
-        if (option.master)
-            option.checkBox.classList.add('master-check');
+        option.quantumCheckBox = await quantum.createInstance("QuantumCheckBox",
+        {
+            id: `${value}_${this._options.length}`,
+            group: value,
+            master: option.master,
+            style: {position: 'relative'}
+        });
 
         option.panel = document.createElement('div');
         option.panel.id = `optionPanel_${this._options.length}`;
@@ -184,7 +130,7 @@ export class QuantumCombo extends Quantum
         option.divCheck = document.createElement('div');
         option.divText.className = "QuantumComboDivText";
         option.divCheck.className = "QuantumComboDivCheck";
-        option.divCheck.appendChild(option.checkBox);
+        option.divCheck.appendChild(option.quantumCheckBox);
         option.divText.innerText = option.option;
         option.panel.appendChild(option.divCheck);
         option.panel.appendChild(option.divText);
@@ -199,13 +145,6 @@ export class QuantumCombo extends Quantum
                 e.stopImmediatePropagation();
                 toggleCheck();
             });
-        });
-
-        option.checkBox.addEventListener('click', (e) =>
-        {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            this.checking(option.checkBox);
         });
     }
 
@@ -273,7 +212,7 @@ export class QuantumCombo extends Quantum
     async connectedCallback()
     {
         this.#render(await this.#getCss());
-        if (this.getAttribute('master') === 'true') await this.addOption({option: 'HTML Master', value: 0, master: true});
+        if (this.getAttribute('master') === 'true') await this.addOption({group: this.id, option: 'HTML Master', value: 0, master: true,});
         this.#applyProps();
         this.#checkAttributes();
         this.#events();

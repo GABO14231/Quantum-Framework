@@ -1,4 +1,3 @@
-// Use future icon component for the job
 export class QuantumConfirm extends Quantum
 {
     constructor(props)

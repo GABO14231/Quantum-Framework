@@ -65,8 +65,7 @@
 .QuantumComboDivText
 {
     display: flex;
-    position: absolute;
-    left: 30px;
+    position: relative;
     align-items: center;
     align-content: center;
     width: 90%;
