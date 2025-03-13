@@ -2,19 +2,18 @@
     <head>
         <title>QuantumMessageBox</title>
         <script type="module" src="../JS/Quantum.js"></script>
+        <script type="module" src="../JS/QuantumIcon.js"></script>
     </head>
 
     <body>
-
+        
         <script>
-            let img = document.createElement("img")
-            img.src = "../Images/icon.png"
             const quantumInit = async () =>{
                 const b = await quantum.createInstance("QuantumMessageBox",
                 {
                     titleLabel : "Error",
                     informationLabel : "Ha ocurrido un error",
-                    icon : img
+                    icon : "error"
                 });
 
                 b.addToBody()

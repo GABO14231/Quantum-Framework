@@ -23,7 +23,7 @@ export class QuantumMessageBox extends Quantum{
                 <button class="QuantumMessageBoxExit">X</button>
             </div>
 
-            <img class="QuantumMessageBoxIcon">
+            <quantum-icon class="QuantumMessageBoxIcon"></quantum-icon>
             <label class="QuantumMessageBoxInformation"></label>
             <button class="QuantumMessageBoxButton">Aceptar</button>
 
@@ -34,7 +34,8 @@ export class QuantumMessageBox extends Quantum{
         this.informationLabel = this.mainElement.querySelector(".QuantumMessageBoxInformation")
         this.informationLabel.textContent = this.props.informationLabel
         this.icon = this.mainElement.querySelector(".QuantumMessageBoxIcon")
-        this.icon.src = this.props.icon.src
+        this.icon.setAttribute("icon-name", this.props.icon)
+        document.createElement("select").setAtt
 
         this.exitButton = this.mainElement.querySelector(".QuantumMessageBoxExit")
         this.acceptButton = this.mainElement.querySelector(".QuantumMessageBoxButton")
