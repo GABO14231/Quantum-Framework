@@ -1,215 +1,195 @@
-export const QuantumCheckBox = class extends Quantum{
-    static observedAttributes = ["caption"];
-
-    constructor(props){
+export class QuantumCheckBox extends Quantum
+{
+    constructor(props)
+    {
         super();  
         this.name = "QuantumCheckBox";
-        this.props = props;     
+        this.props = props;
+        if (props?.id) this.id = props.id;
         this.built = ()=>{}; 
-        this._master = false;
-        this._isBuilt = false;
-        this.objectProps = new Map();
         this.attachShadow({mode:'open'});
-    
     }
 
-    #getTemplate(){
+    #getTemplate()
+    {
         return `
         <label class="QuantumCheckBox">
-            <input type="checkbox">
+            <input class="checkbox" type="checkbox">
             <span class="checkmark"></span>
             <label class="caption"></label>
-        </label>
-        `        
+        </label>`        
     }
 
-    async #getCss(){ 
-      return await quantum.getCssFile("QuantumCheckBox");
+    async #getCss() {return await quantum.getCssFile(this.name);}
+
+    #render(css)
+    {
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+        this.shadowRoot.adoptedStyleSheets = [sheet];
+        this.shadowRoot.innerHTML = this.#getTemplate();
+        this.mainElement = this.shadowRoot.querySelector('.QuantumCheckBox');
+        this.checkElement = this.mainElement.querySelector('.checkbox');
+        this.spanElement = this.mainElement.querySelector('.checkmark');
+        this.labelElement = this.mainElement.querySelector('.caption');
     }
 
-    async #checkAttributes() {
-        try {
-            for (const attr of this.getAttributeNames()) {  
-                const attrValue = this.getAttribute(attr);
-                if (!attr.startsWith("on")) {
-                    this.setAttribute(attr, attrValue);
-                    this[attr] = attrValue;
-                } else {
+    #applyProps()
+    {
+        if (this.props)
+        {
+            Object.entries(this.props).forEach(([key, value]) =>
+            {
+                if (key === 'style') Object.assign(this.mainElement.style, value);
+                else if (key === 'events')
+                    Object.entries(value).forEach(([event, handler]) => this.spanElement.addEventListener(event, handler));
+                else { this[key] = value; this.setAttribute(key, value); }
+            });
+        }
+        else
+            this.getAttributeNames().forEach(attr =>
+            {
+                if (!attr.startsWith("on"))
+                {
+                    const value = this.getAttribute(attr);
+                    this.setAttribute(attr, value);
+                    this[attr] = value;
+                }
+                else
+                {
                     this.checkElement[attr] = this[attr];
                     this[attr] = null;
                 }
-    
-                if (attr === "id") {
-                    quantum.createInstance("QuantumCheckBox", { id: attrValue });
-                    this.mainElement.id = attrValue;
-                }
-            }
-            return this;
-        } catch (error) {
-            throw error;
-        }
+            });
     }
     
-
-    async #checkProps() {
-        try {
-            if (typeof this.props !== 'object' || !this.props) return this;
-    
-            for (const attr in this.props) {
-                const value = this.props[attr];
-    
-                switch (attr) {
-                    case 'style':
-                        if (typeof value === 'object' && value !== null) {
-                            Object.assign(this.mainElement.style, value);
-                        }
-                        break;
-                    
-                    case 'events':
-                        if (typeof value === 'object' && value !== null) {
-                            for (const event in value) {
-                                if (typeof value[event] === 'function') {
-                                    this.spanElement.addEventListener(event, (ev) => {
-                                        ev.preventDefault();
-                                        ev.stopImmediatePropagation();
-                                        if (!this.disabled) value[event]();
-                                    }, false);
-                                }
-                            }
-                        }
-                        break;
-                    
-                    default:
-                        this.setAttribute(attr, value);
-                        this[attr] = value;
-                        if (attr === 'id') {
-                            quantum.createInstance('QuantumCheckBox', { id: value });
-                            this.mainElement.id = value;
-                            this.id = value;
-                        }
-                        break;
-                }
-            }
-    
-            return this;
-        } catch (error) {
-            console.error("Error in checkProps:", error);
-            throw error;
-        }
-    }
-    
-    
-    
-    async connectedCallback(){
-        let sheet = new CSSStyleSheet();
-        sheet.replaceSync(await this.#getCss());
-        this.shadowRoot.adoptedStyleSheets = [sheet];
-        this.template = document.createElement('template');
-        this.template.innerHTML = this.#getTemplate();
-        let tpc = this.template.content.cloneNode(true);  
-        this.mainElement = tpc.firstChild.nextSibling;
-        this.checkElement = this.mainElement.firstChild.nextSibling;
-        this.labelElement = this.mainElement.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling;
-        this.spanElement = this.mainElement.firstChild.nextSibling.nextSibling.nextSibling;
-        this.shadowRoot.appendChild(this.mainElement);        
-        await this.#checkAttributes();
-        await this.#checkProps();
-        this.builtEvents();
+    async connectedCallback()
+    {
+        this.#render(await this.#getCss())
         this.#applyProps();
-        this._isBuilt = true;
+        this.#builtEvents();
         this.built();
-        console.log("hola");
-        
     }
 
+    addToBody(){quantum.addToBody(this)}
 
-    builtEvents(){
-        this.checkElement.addEventListener('keyup', (ev)=>{
-            ev.preventDefault(); 
-            ev.stopImmediatePropagation();
-            if(ev.key === 'Enter' && !this.disabled){
-                if(this.checked)this.checked = false; else this.checked=true; 
-                this.dispatchEvent(new CustomEvent("enter", {bubbles: true})); 
-            };
-        }, false);  
-        this.checkElement.addEventListener('change', (ev)=>{
-            ev.preventDefault();
-            ev.stopImmediatePropagation();if(!this.disabled){ 
-             }
-        }, false);
-    }
-
-    addToBody(){
-        document.body.appendChild(this);
-    }
-
-    async #applyProps() {
-        try {
-            for (const [key, val] of this.objectProps.entries()) {
-                switch (val.obj) {
-                    case 'mainElement':
-                        this.mainElement[key] = val.value;
-                        break;
-                    case 'checkElement':
-                        this.checkElement[key] = val.value;
-                        break;
-                    case 'labelElement':
-                        this.labelElement[key] = val.value;
-                        break;
-                    case 'funct':
-                        await val.funct(val.value);
-                        break;
-                }
-                this.objectProps.delete(key);
+    #builtEvents()
+    {
+        this.checkElement.addEventListener('keyup', (ev) =>
+        {
+            if (ev.key === 'Enter' && !this.disabled)
+            {
+                this.checked = !this.checked;
+                this.checking();
+                this.dispatchEvent(new CustomEvent("enter", {bubbles: true}));
             }
-            return this;
-        } catch (e) {
-            throw e;
+        }, false);
+        this.checkElement.addEventListener('change', () => {if (!this.disabled) this.checking();}, false);
+    }
+
+    checking()
+    {
+        if (this.master)
+        {
+            quantum.checkGroup[this._group].forEach(item =>
+            {
+                if (!item.master)
+                {
+                    item.checked = this.checked;
+                    item.sts = item.checked ? 1 : 0;
+                }
+                else item.spanElement.className = 'checkMark';
+            });
+        }
+        else
+        {
+            let allChecked = true;
+            let allUnchecked = true;
+            let masterItem = null;
+
+            quantum.checkGroup[this._group].forEach(item =>
+            {
+                if (!item.master)
+                {
+                    allChecked = allChecked && item.checked;
+                    allUnchecked = allUnchecked && !item.checked;
+                }
+                else masterItem = item;
+            });
+
+            if (masterItem)
+            {
+                if (allChecked)
+                {
+                    masterItem.sts = 1;
+                    masterItem.checked = true;
+                    masterItem.spanElement.className = 'checkMark';
+                }
+                else if (allUnchecked)
+                {
+                    masterItem.sts = 0;
+                    masterItem.checked = false;
+                    masterItem.spanElement.className = 'checkMark';
+                }
+                else
+                {
+                    masterItem.sts = -1;
+                    masterItem.checked = true;
+                    masterItem.spanElement.className = 'checkMarkInd';
+                }
+            }
         }
     }
     
-    #checking(val){
+    #checking(val)
+    {
         this.checkElement.checked = val;
-
-    }
-
-    #checkDisable(val){
-        if(val){this.style.opacity = 0.3
-
-        } else {
-            this.style.opacity = 1
+        if (this.master && this._sts !== -1 && this._group)
+        {
+            quantum.checkGroup[this._group].forEach(item =>
+            {
+                if (!item.master)
+                {
+                    item.checkElement.checked = val;
+                    item._sts = val ? 1 : 0;
+                }
+            });
         }
     }
+    #checkDisable(val) { this.style.opacity = val ? 0.3 : 1; this.style.display = 'none'; }
 
-    get caption (){
-        return this.mainElement.innerText
-    }    
-    set caption(val){
+    get caption() {return this.mainElement.innerText;}
+    set caption(val)
+    {
         this.setAttribute('caption', val);
-        if(this.labelElement) this.labelElement.innerText = val;
-        else {this.objectProps.set('innerText', {'obj' :'labelElement', 'value':val})}
-        this.dispatchEvent(new CustomEvent("changeCaption", {bubbles: true}));        
+        this.labelElement.innerText = val;
+        this.dispatchEvent(new CustomEvent("changeCaption", {bubbles: true}));
     }
-    
-    get checked (){return this.checkElement.checked}
-
-    set checked (val){        
-        if(this.checkElement){
-            this.checkElement.checked = val;
-            this.#checking(val);
-        }
-        else{
-            this.objectProps.set('checked', {'obj' :'checkElement', 'value':val, 'funct':this.#checking})
-        }
+    get checked() {return this.checkElement.checked}
+    set checked(val)
+    {
+        this.checkElement.checked = val;
+        this.#checking(val);
     }
-    get disabled (){return this.checkElement.disabled}
-    set disabled(val){
+    get disabled() {return this.checkElement.disabled;}
+    set disabled(val)
+    {
         this.setAttribute('disabled', val);
-        if(this.checkElement) {this.checkElement.disabled = val; this.#checkDisable(val)}
-        else{ this.objectProps.set('disabled', {'obj' :'checkElement', 'value':val, 'funct':this.#checkDisable})}
+        this.checkElement.disabled = val;
+        this.#checkDisable(val);
     }
-    
+    get group() {return this._group;}
+    set group(val)
+    {
+        this._group = val;
+        quantum.checkGroup[val] = quantum.checkGroup[val] || [];
+        quantum.checkGroup[val].push(this);
+    }
+    get master() {return this._master;}
+    set master(val) {this._master = val;}
+    get sts() {return this._sts;}
+    set sts(val) {this._sts = val;}
 }
-if (!customElements.get ('quantum-check')) {
-    customElements.define ('quantum-check', QuantumCheckBox);
-}
+
+customElements.define ('quantum-check', QuantumCheckBox);
+
