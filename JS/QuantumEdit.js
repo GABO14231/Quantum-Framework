@@ -1,9 +1,3 @@
-if (!window.Quantum) {
-    throw new Error("Quantum no está definido. Asegúrate de que se ha cargado antes.");
-}
-
-console.log("QuantumEdit.js cargado correctamente");
-
 export const QuantumEdit = class extends Quantum {
     static observedAttributes = ["caption"];
 
@@ -110,7 +104,6 @@ export const QuantumEdit = class extends Quantum {
             label.textContent = this.getAttribute("caption") || "Escribe aqui";
         }
         this.builtEvents();
-        quantum.notifyBuilt(this.id);
         this.built();
     }
 
@@ -120,7 +113,7 @@ export const QuantumEdit = class extends Quantum {
         this.inputElement.addEventListener("focus", () => this.#animationUp());
         this.inputElement.addEventListener("change", () => {
             this.#animationUp();
-            // this.valid();
+      
          });
         this.inputElement.addEventListener("keyup", this.#handleKeyEvents.bind(this));
         this.inputElement.addEventListener("blur", () => {
@@ -179,7 +172,7 @@ export const QuantumEdit = class extends Quantum {
         return this.labelElement.innerText;
     }
     set caption(val) {
-        // this.setAttributeAndUpdate("caption", val);
+   
         this.setAttribute("caption", val);
         let label = this.shadowRoot?.querySelector('.QuantumEditLabel');
         if(label) label.textContent = val;

@@ -117,7 +117,6 @@ export const QuantumCheckBox = class extends Quantum{
         this.builtEvents();
         this.#applyProps();
         this._isBuilt = true;
-        quantum.notifyBuilt(this.id);
         this.built();
         console.log("hola");
         
