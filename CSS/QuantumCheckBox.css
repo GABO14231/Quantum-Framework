@@ -1,0 +1,111 @@
+.QuantumCheckBox {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px; 
+    margin-bottom: 15px;  
+    cursor: pointer;
+    user-select: none;
+    width: auto;
+}
+
+.caption {
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin-left: 10px;
+}
+
+.QuantumCheckBox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%); 
+    height: 18px;
+    width: 18px;
+    background-color: transparent;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkmarkInd {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    height: 18px;
+    width: 18px;
+    background-color: transparent;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+}
+
+.QuantumCheckBox:hover input ~ .checkmark {
+    border-color: #ff5722;
+    background-color: #ffccbc;
+}
+
+.QuantumCheckBox input:checked ~ .checkmark {
+    border-color: #4caf50;
+    background-color: #4caf50;
+}
+
+.QuantumCheckBox input:checked ~ .checkmarkInd {
+    border-color: #4caf50;
+    background-color: #4caf50;
+}
+
+.QuantumCheckBox input:focus ~ .checkmark {
+    border-color: #ff5722;
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none; 
+    left: 4px;
+    top: 3px;   
+    width: 6px;
+    height: 10px; 
+    border: solid white; 
+    border-width: 0 3px 3px 0; 
+    transform: rotate(45deg);
+}
+
+.checkmarkInd:after {
+    content: "";
+    position: absolute;
+    display: block; 
+    left: 4px;  
+    top: 3px;   
+    width: 6px; 
+    height: 10px; 
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+.QuantumCheckBox input:checked ~ .checkmark:after {
+    display: block; 
+}
+
+@keyframes checkmarkAnimation {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
