@@ -1,3 +1,5 @@
+:host {--QuantumMemoHeight: 100px;}
+
 .QuantumMemo
 {
     margin: auto;
@@ -8,8 +10,11 @@
     font-family: 'Segoe UI', sans-serif;
     border: solid;
     width: 300px;
-    height: 100px;
+    height: var(--QuantumMemoHeight);
     margin-bottom: 10px;
     overflow-y: auto;
     overflow-x: auto;
 }
+
+.QuantumMemo:empty {line-height: var(--QuantumMemoHeight);}
+.QuantumMemo:not(:empty) {line-height: auto;}

@@ -53,9 +53,11 @@ export class QuantumMemo extends Quantum
 
     addContent(string)
     {
-        if (this.mainElement.innerHTML != '') this.mainElement.innerHTML += `<br/>`
-        if (string) this.mainElement.innerHTML += `${string}<br/>`;
-        else this.mainElement.innerHTML += `${this.getAttribute('caption')}<br/>`;
+        let divContents = this.mainElement.innerHTML;
+        if ((divContents !== '') && (divContents.indexOf("<br>") == -1)) divContents += `<br/>`
+        if (string) divContents += `${string}<br/>`;
+        else divContents += `${this.getAttribute('caption')}<br/>`;
+        this.mainElement.innerHTML = divContents;
     }
     clearContent() {this.mainElement.innerHTML = '';}
 
