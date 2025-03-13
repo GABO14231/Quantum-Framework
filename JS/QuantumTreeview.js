@@ -1,48 +1,46 @@
-class TreeView extends HTMLElement {
-    constructor() {
+export class QuantumTreeview extends Quantum {
+    constructor(props) {
         super();
-        this.shadow = this.attachShadow({ mode: 'open' });
-
-        // Leer el atributo 'data' y convertirlo en JSON
-        this.data = this.getAttribute('data') ? JSON.parse(this.getAttribute('data')) : [];
-
-        this.render();
+        this.name = "QuantumTreeview";
+        this.props = props;
+        if (props?.id) this.id = props.id;
+        this.attachShadow({ mode: 'open' });
+        this.built = () => {};
     }
 
-    render() {
-        this.shadow.innerHTML = ''; // Limpiar el shadow
-
-        
-        const styleLink = document.createElement('link');
-        styleLink.setAttribute('rel', 'stylesheet');
-        styleLink.setAttribute('href', 'treeview.css');
-
-        // Crear contenedor del árbol
-        const container = document.createElement('div');
-        container.classList.add('tree-container');
-        container.innerHTML = this.generateTreeHTML(this.data); 
-
-        
-        this.shadow.appendChild(styleLink);
-        this.shadow.appendChild(container);
-
-        
-        this.initializeEvents();
+    #getTemplate() {
+        return `
+        <div class="tree-container">
+            ${this.#generateTreeHTML(this.props?.data || [])}
+        </div>
+        `;
     }
 
-    generateTreeHTML(data) {
-        if (!Array.isArray(data) || data.length === 0) return '<p>No hay datos disponibles.</p>'; //s no es arreglo bye
+    async #getCss() { return await quantum.getCssFile("QuantumTreeview"); }
+
+    async #render(css) {
+        this.template = document.createElement('template');
+        this.template.innerHTML = this.#getTemplate();
+        const sheet = new CSSStyleSheet();
+        sheet.replaceSync(css);
+        this.shadowRoot.adoptedStyleSheets = [sheet];
+        const tpc = this.template.content.cloneNode(true);
+        this.mainElement = tpc.firstElementChild;
+        this.shadowRoot.appendChild(this.mainElement);
+    }
+
+    #generateTreeHTML(data) {
+        if (!Array.isArray(data) || data.length === 0) return '<p>No hay datos disponibles.</p>';
 
         let html = '<ul>';
         data.forEach(item => {
             const hasChildren = item.children && item.children.length > 0;
-
             html += `
                 <li>
                     <label>
                         <input type="checkbox" class="parent"> ${item.name}
                     </label>
-                    ${hasChildren ? `<ul>${this.generateTreeHTML(item.children)}</ul>` : ''}
+                    ${hasChildren ? `<ul>${this.#generateTreeHTML(item.children)}</ul>` : ''}
                 </li>
             `;
         });
@@ -50,67 +48,46 @@ class TreeView extends HTMLElement {
         return html;
     }
 
-    initializeEvents() {
-        const parentCheckboxes = this.shadow.querySelectorAll('.parent');
+    #initializeEvents() {
+        const parentCheckboxes = this.shadowRoot.querySelectorAll('.parent');
 
         parentCheckboxes.forEach(parentCheckbox => {
             const childCheckboxes = parentCheckbox.closest('li').querySelectorAll('ul input[type="checkbox"]');
 
-            // ✅ Evento para actualizar hijos cuando cambia el padre
             parentCheckbox.addEventListener('change', () => {
-                this.toggleChildCheckboxes(parentCheckbox, childCheckboxes);
+                this.#toggleChildCheckboxes(parentCheckbox, childCheckboxes);
             });
 
-            // ✅ Evento para actualizar el estado del padre cuando cambian los hijos o nter
             childCheckboxes.forEach(child => {
                 child.addEventListener('change', () => {
-                    this.updateParentState(parentCheckbox, childCheckboxes);
+                    this.#updateParentState(parentCheckbox, childCheckboxes);
                 });
             });
         });
     }
 
-    toggleChildCheckboxes(parentCheckbox, childCheckboxes) {
-        const isChecked = parentCheckbox.checked; // Verificar si el padre está marcado
-        childCheckboxes.forEach((child) => {
-            child.checked = isChecked; // Marcar/desmarcar hijos según el estado del padre
-            child.dispatchEvent(new Event('change')); //  Disparar evento de cambio en los hijos
+    #toggleChildCheckboxes(parentCheckbox, childCheckboxes) {
+        const isChecked = parentCheckbox.checked;
+        childCheckboxes.forEach(child => {
+            child.checked = isChecked;
+            child.dispatchEvent(new Event('change'));
         });
     }
 
-    updateParentState(parentCheckbox, childCheckboxes) {
-        // Verificar si todos los hijos están marcados
-        const allChecked = Array.from(childCheckboxes).every((checkbox) => checkbox.checked);
-        // Verificar si algunos hijos están marcados
-        const someChecked = Array.from(childCheckboxes).some((checkbox) => checkbox.checked);
-
-        // Actualizar el estado del padre
-        parentCheckbox.checked = allChecked; // Si todos los hijos están marcados, el padre también lo está
-        parentCheckbox.indeterminate = !allChecked && someChecked; // Si no todos los hijos están marcados pero algunos sí, el padre está indeterminado
+    #updateParentState(parentCheckbox, childCheckboxes) {
+        const allChecked = Array.from(childCheckboxes).every(checkbox => checkbox.checked);
+        const someChecked = Array.from(childCheckboxes).some(checkbox => checkbox.checked);
+        parentCheckbox.checked = allChecked;
+        parentCheckbox.indeterminate = !allChecked && someChecked;
     }
 
-    static get observedAttributes() {
-        return ['data'];
+    async connectedCallback() {
+        await this.#render(await this.#getCss());
+        this.#initializeEvents();
+        this.built();
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'data') {
-            this.data = JSON.parse(newValue);
-            this.render(); // Volver a renderizar cuando cambien los datos
-        }
-    }
+    addToBody() { quantum.addToBody(this); }
 }
 
-
-customElements.define('tree-view', TreeView);
-
-
-
-
-
-
-
-
-
-
-
+customElements.define('quantum-treeview', QuantumTreeview);

@@ -1,6 +1,11 @@
+.tree-container {
+    font-family: Arial, sans-serif;
+}
+
 .tree-container ul {
     list-style: none;
     padding-left: 20px;
+    margin: 0;
 }
 
 .tree-container li {
@@ -9,8 +14,21 @@
 
 .tree-container label {
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .tree-container input[type="checkbox"] {
     margin-right: 5px;
+    cursor: pointer;
+}
+
+/* Opcional: Mejoras de diseño */
+.tree-container li {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.tree-container li:hover {
+    background-color: #f0f0f0;
 }

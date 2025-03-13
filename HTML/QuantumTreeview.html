@@ -1,44 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TreeView Component</title>
-    <script defer src="treeview2_component.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        tree-view {
-            border: 1px solid #ddd;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-</head>
-<body>
-
-    <tree-view data='[
-        {
-            "name": "Seguridad",
-            "children": [
-                { "name": "Crear" },
-                { "name": "Eliminar" },
-                { "name": "Buscar" },
-                { "name": "Modificar" }
-            ]
-        }
-    ]'></tree-view>
-
-</body>
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () => {
+                const treeview = await quantum.createInstance("QuantumTreeview", {
+                    id: 'TreeviewComponent',
+                    data: [
+                        {
+                            name: "Seguridad",
+                            children: [
+                                { name: "Crear" },
+                                { name: "Eliminar" },
+                                { name: "Buscar" },
+                                { name: "Modificar" }
+                            ]
+                        }
+                    ]
+                });
+                treeview.built = () => { console.log('QuantumTreeview Renderizado!'); };
+                treeview.addToBody();
+            };
+            quantumInit();
+        </script>
+    </body>
 </html>
-
-
-
