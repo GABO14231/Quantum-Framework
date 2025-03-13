@@ -52,8 +52,7 @@ export class QuantumCombo extends Quantum
         {
             Object.entries(this.props).forEach(([key, value]) =>
             {
-                if (key === 'master') this.addOption({group: this.id, option: 'JS Master', value: 0, master: true});
-                else if (key === 'style') Object.assign(this.mainElement.style, value);
+                if (key === 'style') Object.assign(this.mainElement.style, value);
                 else if (key === 'events')
                     Object.entries(value).forEach(([event, handler]) => this.mainElement.addEventListener(event, handler));
                 else {this[key] = value; this.setAttribute(key, value);}
@@ -69,6 +68,16 @@ export class QuantumCombo extends Quantum
                     this[attr] = value;
                 }
             });
+    }
+
+    #masterCheck()
+    {
+        const value = this.getAttribute('master');
+        if (value === 'true')
+        {
+            if (this.props) this.addOption({ group: this.id, option: 'JS Master', value: 0, master: true });
+            else this.addOption({ group: this.id, option: 'HTML Master', value: 0, master: true, });
+        }
     }
 
     #checkAttributes()
@@ -134,8 +143,17 @@ export class QuantumCombo extends Quantum
         option.divText.innerText = option.option;
         option.panel.appendChild(option.divCheck);
         option.panel.appendChild(option.divText);
-        this.panel.appendChild(option.panel);
-        this._options.push(option);
+
+        if (option.master)
+        {
+            this.panel.insertBefore(option.panel, this.panel.firstChild);
+            this._options.unshift(option);
+        }
+        else
+        {
+            this.panel.appendChild(option.panel);
+            this._options.push(option);
+        }
 
         [option.divCheck, option.divText].forEach(element =>
         {
@@ -212,9 +230,13 @@ export class QuantumCombo extends Quantum
     async connectedCallback()
     {
         this.#render(await this.#getCss());
-        if (this.getAttribute('master') === 'true') await this.addOption({group: this.id, option: 'HTML Master', value: 0, master: true,});
         this.#applyProps();
         this.#checkAttributes();
+        if (this.getAttribute('master') === 'true')
+        {
+            if (this.props) this.addOption({group: this.id, option: 'JS Master', value: 0, master: true});
+            else this.addOption({group: this.id, option: 'HTML Master', value: 0, master: true});
+        }
         this.#events();
         this.built();
     }

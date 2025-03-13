@@ -45,7 +45,7 @@ export class QuantumCalendar extends Quantum
         this.shadowRoot.adoptedStyleSheets = [sheet];
         this.shadowRoot.innerHTML = this.#getTemplate();
         this.mainElement = this.shadowRoot.querySelector('.QuantumCalendar');
-        this.calendarInput = this.shadowRoot.querySelector(".QuantumCalendarInput");
+        this.calendarInput = this.mainElement.querySelector(".QuantumCalendarInput");
         this.calendarContainer = this.mainElement.querySelector(".calendar-container");
         this.calendarWeekdays = this.mainElement.querySelector(".calendar-weekdays");
         this.calendarCurrentDate = this.mainElement.querySelector(".calendar-current-date");
@@ -229,8 +229,6 @@ export class QuantumCalendar extends Quantum
         const calendarDates = this.mainElement.querySelectorAll(".calendar-date-individual");
         calendarDates.forEach(date =>
         {
-            const circle = date.querySelector(".circle");
-            const dayNumber = date.querySelector(".calendar-date-number");
             date.addEventListener("click", () =>
             {
                 const previousClicked = this.mainElement.querySelector(".clicked");
