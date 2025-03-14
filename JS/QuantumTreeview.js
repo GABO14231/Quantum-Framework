@@ -2,83 +2,10 @@ export class QuantumTreeview extends Quantum {
     constructor(props) {
         super();
         this.name = "QuantumTreeview";
-        this.props = props;
-        if (props?.id) this.id = props.id;
+        this.props = props || {};
+        this.id = props?.id || null;
         this.attachShadow({ mode: 'open' });
-        this.built = () => {};
-    }
-
-    #getTemplate() {
-        return `
-        <div class="tree-container">
-            ${this.#generateTreeHTML(this.props?.data || [])}
-        </div>
-        `;
-    }
-
-    async #getCss() { return await quantum.getCssFile("QuantumTreeview"); }
-
-    async #render(css) {
-        this.template = document.createElement('template');
-        this.template.innerHTML = this.#getTemplate();
-        const sheet = new CSSStyleSheet();
-        sheet.replaceSync(css);
-        this.shadowRoot.adoptedStyleSheets = [sheet];
-        const tpc = this.template.content.cloneNode(true);
-        this.mainElement = tpc.firstElementChild;
-        this.shadowRoot.appendChild(this.mainElement);
-    }
-
-    #generateTreeHTML(data) {
-        if (!Array.isArray(data) || data.length === 0) return '<p>No hay datos disponibles.</p>';
-
-        let html = '<ul>';
-        data.forEach(item => {
-            const hasChildren = item.children && item.children.length > 0;
-            html += `
-                <li>
-                    <label>
-                        <input type="checkbox" class="parent"> ${item.name}
-                    </label>
-                    ${hasChildren ? `<ul>${this.#generateTreeHTML(item.children)}</ul>` : ''}
-                </li>
-            `;
-        });
-        html += '</ul>';
-        return html;
-    }
-
-    #initializeEvents() {
-        const parentCheckboxes = this.shadowRoot.querySelectorAll('.parent');
-
-        parentCheckboxes.forEach(parentCheckbox => {
-            const childCheckboxes = parentCheckbox.closest('li').querySelectorAll('ul input[type="checkbox"]');
-
-            parentCheckbox.addEventListener('change', () => {
-                this.#toggleChildCheckboxes(parentCheckbox, childCheckboxes);
-            });
-
-            childCheckboxes.forEach(child => {
-                child.addEventListener('change', () => {
-                    this.#updateParentState(parentCheckbox, childCheckboxes);
-                });
-            });
-        });
-    }
-
-    #toggleChildCheckboxes(parentCheckbox, childCheckboxes) {
-        const isChecked = parentCheckbox.checked;
-        childCheckboxes.forEach(child => {
-            child.checked = isChecked;
-            child.dispatchEvent(new Event('change'));
-        });
-    }
-
-    #updateParentState(parentCheckbox, childCheckboxes) {
-        const allChecked = Array.from(childCheckboxes).every(checkbox => checkbox.checked);
-        const someChecked = Array.from(childCheckboxes).some(checkbox => checkbox.checked);
-        parentCheckbox.checked = allChecked;
-        parentCheckbox.indeterminate = !allChecked && someChecked;
+        this.built = () => { };
     }
 
     async connectedCallback() {
@@ -87,7 +14,92 @@ export class QuantumTreeview extends Quantum {
         this.built();
     }
 
-    addToBody() { quantum.addToBody(this); }
+    #getTemplate() {
+        return `
+            <div class="tree-container">
+                ${this.#generateTreeHTML(this.props?.data || [])}
+            </div>
+        `;
+    }
+
+    async #getCss() {
+        return await quantum.getCssFile("QuantumTreeview");
+    }
+
+    async #render(css) {
+        const template = document.createElement('template');
+        template.innerHTML = this.#getTemplate();
+
+        const styleSheet = new CSSStyleSheet();
+        styleSheet.replaceSync(css);
+        this.shadowRoot.adoptedStyleSheets = [styleSheet];
+
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+    }
+
+    #generateTreeHTML(data) {
+        if (!Array.isArray(data) || data.length === 0) return '<p>No hay datos disponibles.</p>';
+
+        return `
+            <ul>
+                ${data.map(item => `
+                    <li>
+                        <label>
+                            <input type="checkbox" class="tree-checkbox" name="${item.name}"> ${item.name}
+                        </label>
+                        ${item.children?.length ? this.#generateTreeHTML(item.children) : ''}
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+    }
+
+    #initializeEvents() {
+        this.shadowRoot.querySelector('.tree-container').addEventListener('change', (event) => {
+            this.#handleCheckboxChange(event.target);
+        });
+    }
+
+    #handleCheckboxChange(checkbox) {
+        const listItem = checkbox.closest('li');
+
+        console.log('checkbox', checkbox)
+
+        // Update child checkboxes if any
+        this.#toggleChildCheckboxes(listItem, checkbox.checked);
+
+        // Update all parent checkboxes recursively
+        this.#updateParentCheckboxes(listItem);
+    }
+
+    #toggleChildCheckboxes(listItem, isChecked) {
+        const childCheckboxes = listItem.querySelector('ul')?.querySelectorAll(':scope > li > label > .tree-checkbox') || [];
+        childCheckboxes.forEach(child => {
+            child.checked = isChecked;
+            child.indeterminate = false;
+        });
+    }
+
+    #updateParentCheckboxes(listItem) {
+        while (listItem.parentElement && listItem.parentElement.closest('li')) {
+            const parentLi = listItem.parentElement.closest('ul');
+            const parentCheckbox = parentLi.parentElement.querySelector('.tree-checkbox');
+            const siblingCheckboxes = parentLi.querySelectorAll(':scope > li > label > .tree-checkbox') || [];
+            const childrenCheckboxes = listItem.parentElement.querySelectorAll(':scope > ul > li > label > .tree-checkbox') || [];
+
+            const allChecked = [...siblingCheckboxes].every(cb => cb.checked);
+            const someChecked = [...childrenCheckboxes].some(cb => cb.checked);
+
+            parentCheckbox.checked = allChecked;
+            parentCheckbox.indeterminate = !allChecked && someChecked;
+
+            listItem = parentLi;
+        }
+    }
+
+    addToBody() {
+        quantum.addToBody(this);
+    }
 }
 
 customElements.define('quantum-treeview', QuantumTreeview);
