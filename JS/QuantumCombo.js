@@ -105,7 +105,7 @@ export class QuantumCombo extends Quantum
     }
 
     getSelected() {return this._options.filter(item => !item.master && item.quantumCheckBox.checked);}
-    getDiselected() {return this._options.filter(item => !item.master && item.quantumCheckBox.checked);}
+    getDiselected() {return this._options.filter(item => !item.master && !item.quantumCheckBox.checked);}
 
     async addOption(option)
     {
