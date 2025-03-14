@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quantum Menu Bar</title>
     <script type="module" src="../JS/Quantum.js"></script>
     <script type="module" src="../JS/QuantumMenuBar.js"></script>
@@ -10,21 +8,21 @@
 <body>
     <h1>Quantum Menu Bar</h1>
 
-    <quantum-menu-bar>
-        <quantum-menu-item title="About Us"></quantum-menu-item>
-        <quantum-menu-item title="Products">
-            <quantum-submenu-item title="House"></quantum-submenu-item>
-            <quantum-submenu-item title="Kitchen"></quantum-submenu-item>
-            <quantum-submenu-item title="Bedroom"></quantum-submenu-item>
-            <quantum-submenu-item title="Bathroom"></quantum-submenu-item>
-            <quantum-submenu-item title="Compare"></quantum-submenu-item>
-        </quantum-menu-item>
-        <quantum-menu-item title="Account">
-            <quantum-submenu-item title="My Profile"></quantum-submenu-item>
-            <quantum-submenu-item title="Payment Methods"></quantum-submenu-item>
-            <quantum-submenu-item title="Order History"></quantum-submenu-item>
-        </quantum-menu-item>
-        <quantum-menu-item title="Cart"></quantum-menu-item>
-    </quantum-menu-bar>
+    <quantum-menu-bar id="main-menu"></quantum-menu-bar>
+
+    <script>
+        const quantumInit = async () => {
+            const menuBar = document.getElementById('main-menu');
+
+            // Agregar elementos al menú dinámicamente
+            menuBar.addMenuItem("About Us");
+            menuBar.addMenuItem("Products", ["House", "Kitchen", "Bedroom", "Bathroom", "Compare"]);
+            menuBar.addMenuItem("Account", ["My Profile", "Payment Methods", "Order History"]);
+            menuBar.addMenuItem("Cart");
+        };
+
+        // Llamar a quantumInit cuando el DOM esté listo
+        document.addEventListener("DOMContentLoaded", quantumInit);
+    </script>
 </body>
 </html>
