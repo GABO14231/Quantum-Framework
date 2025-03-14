@@ -1,0 +1,82 @@
+/* Estilos generales del menú */
+.QuantumPopupmenu {
+    display: flex;
+    width: 20%;
+    flex-direction: column; /* Apila los menús verticalmente */
+    background: #6c5ce7;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Espacio alrededor del cuerpo */
+    gap: 20px; /* Espacio entre los menús */
+}
+
+/* Estilos del encabezado del menú */
+.QuantumPopupmenu .header {
+    padding: 20px;
+    background: #6c5ce7; /* Mismo color que el menú */
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+}
+
+/* Estilos del contenedor de los ítems del menú */
+.QuantumPopupmenu .container {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 10px 0; /* Espaciado interno */
+    background: #6c5ce7; /* Fondo del menú */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+/* Estilos de los ítems del menú */
+.QuantumPopupmenu .menu-item {
+    padding: 15px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+    transition: background 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff; /* Color de texto blanco */
+}
+
+.QuantumPopupmenu .menu-item:hover {
+    background: #857cd6; /* Color de fondo al pasar el mouse (tono más claro) */
+}
+
+/* Estilos de la flecha en los ítems con submenú */
+.QuantumPopupmenu .menu-item .arrow {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8); /* Color de texto más claro para la flecha */
+}
+
+/* Estilos del botón "Atrás" */
+.QuantumPopupmenu .back-button {
+    padding: 15px;
+    background: #857cd6; /* Color de fondo más claro */
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px;
+    margin: 10px;
+    transition: background 0.3s ease;
+}
+
+.QuantumPopupmenu .back-button:hover {
+    background: #9a8fdf; /* Color de fondo al pasar el mouse (tono más claro) */
+}
+
+/* Elimina el margen inferior del último menú */
+.QuantumPopupmenu:last-child {
+    margin-bottom: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea los menús a la izquierda */
+    gap: 40px; /* Espacio entre los menús */
+    padding: 20px; /* Espacio alrededor del cuerpo */
+}

@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+        <style>
+            /* Estilo personalizado para el menú creado desde JavaScript */
+            #jsMenu {
+                margin-top: 50px; /* Separación de 20px entre los menús */
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () => {
+                // Crear una instancia del menú desde JavaScript
+                const menu = await quantum.createInstance("QuantumPopupmenu", {
+                    id: 'jsMenu',
+                    menus: {
+                        main: { // Menú principal
+                            title: "Menú JS Principal",
+                            items: [
+                                { title: "Opción 1", submenu: "submenu1" }, // Con submenú
+                                { title: "Opción 2" } // Sin submenú
+                            ]
+                        },
+                        submenu1: { // Submenú
+                            title: "Submenú 1",
+                            items: [
+                                { title: "Subopción 1" },
+                                { title: "Subopción 2" }
+                            ]
+                        }
+                    }
+                });
+
+                // Configurar el callback "built"
+                menu.built = () => {
+                    menu.show(); // Mostrar el componente
+                };
+
+                // Agregar el menú al cuerpo del documento
+                quantum.addToBody(menu); // Pasar la instancia como argumento
+            };
+        </script>
+
+        <!-- Crear una instancia del menú desde HTML -->
+        <quantum-popupmenu id="htmlMenu" menus='{
+            "main": {
+                "title": "Menú HTML Principal",
+                "items": [
+                    { "title": "Opción 1", "submenu": "submenu1" },
+                    { "title": "Opción 2" }
+                ]
+            },
+            "submenu1": {
+                "title": "Submenú 1",
+                "items": [
+                    { "title": "Subopción 1" },
+                    { "title": "Subopción 2" }
+                ]
+            }
+        }'>
+        </quantum-popupmenu>
+    </body>
+</html>
