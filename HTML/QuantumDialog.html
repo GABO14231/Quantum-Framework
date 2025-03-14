@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <script src="../JS/Quantum.js" type="module"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const b = await quantum.createInstance("QuantumDialog",
+                {
+                    id: 'Dialog1',
+                    mainMessage: '¿Quieres adquirir la oferta de 10 perros por 1$?',
+                    subMessage: 'Puedes mover este diálogo.',
+                    showCloseButton: true,
+                    showButtons: true,
+                    isDraggable: true,
+                    enableResize: true,
+                    isModal: true,
+                    acceptButtonText: 'Si acepto la oferta',
+                    cancelButtonText: 'No la quiero'
+                });
+                b.built = () => {console.log('Built Component!');};
+                b.addToBody();
+                const c = await quantum.createInstance("QuantumButton",
+                {
+                    id: 'jsButton1',
+                    caption: 'Abrir Diálogo 1',
+                    events: {'click': () => {quantum.getInstance('Dialog1').openDialog()}}
+                })
+                c.addToBody();
+                const d = await quantum.createInstance("QuantumButton",
+                {
+                    id: 'jsButton2',
+                    caption: 'Abrir Diálogo 2',
+                    events: {'click': () => {quantum.getInstance('Dialog2').openDialog()}}
+                })
+                d.addToBody();
+            };
+        </script>
+        <quantum-dialog id="Dialog2" mainMessage="Estas seguro que quieres seguir?"
+            subMessage="Podrias perder toda tu informacion confirmando" showCloseButton=true showButtons=true
+            enableResize=true acceptButtonText="Confirmar" cancelButtonText="Rechazar" isDraggable=true></quantum-dialog>
+    </body>
+</html>
