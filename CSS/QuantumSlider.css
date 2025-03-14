@@ -16,8 +16,8 @@ html, body
     padding: 20px;
     box-sizing: border-box;
     display: flex;
-    justify-content: center; /* Centra el contenedor principal */
-    align-items: center; /* Asegura que los elementos estén alineados verticalmente */
+    justify-content: center;
+    align-items: center;
 }
 
 .slider
@@ -27,10 +27,10 @@ html, body
     max-width: 400px;
     height: 350px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: auto; /* Centra el slider horizontalmente */
+    margin: auto;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centra las diapositivas */
+    justify-content: center;
 }
 
 .slides
@@ -38,7 +38,7 @@ html, body
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden; /* Oculta cualquier contenido que exceda el contenedor */
+    overflow: hidden;
 }
 
 .slide
@@ -49,42 +49,41 @@ html, body
     width: 100%;
     height: 100%;
     opacity: 0;
-    transform: translateX(100%); /* Posición inicial de las diapositivas (fuera del contenedor) */
+    transform: translateX(100%);
     display: flex;
-    align-items: center; /* Centra verticalmente */
-    justify-content: center; /* Centra horizontalmente */
-    transition: transform 1s ease-in-out, opacity 1s ease-in-out; /* Transiciones suaves */
+    align-items: center;
+    justify-content: center;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
 
 .slide.active
 {
-    transform: translateX(0); /* Diapositiva activa en el centro */
-    opacity: 1; /* Completamente visible */
+    transform: translateX(0);
+    opacity: 1;
 }
 
 .slide.outgoing-left
 {
-    transform: translateX(-100%); /* Sale hacia la izquierda */
-    opacity: 0; /* Gradualmente invisible */
+    transform: translateX(-100%);
+    opacity: 0;
 }
 
 .slide.incoming-left
 {
-    transform: translateX(0); /* Entra desde la izquierda hacia el centro */
-    opacity: 1; /* Gradualmente visible */
+    transform: translateX(0);
+    opacity: 1;
 }
 
 .slide.outgoing-right
 {
-    transform: translateX(100%); /* Sale hacia la derecha */
-    opacity: 0; /* Gradualmente invisible */
+    transform: translateX(100%);
+    opacity: 0;
 }
 
 .slide.incoming-right
 {
-    transform: translateX(0); /* Entra desde la derecha hacia el centro */
-    opacity: 1; /* Gradualmente visible */
-}
+    transform: translateX(0);
+    opacity: 1;
 
 @keyframes slideInFromLeft
 {
@@ -113,11 +112,11 @@ html, body
 .slide img
 {
     width: 100%;
-    height: auto; /* Mantiene la proporción de la imagen */
+    height: auto;
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    margin: auto; /* Centra la imagen dentro de la diapositiva */
+    margin: auto;
     display: block;
 }
 
@@ -169,9 +168,9 @@ html, body
 
 .arrow.hidden
 {
-    opacity: 0.2; /* La flecha será invisible */
-    pointer-events: none; /* Desactiva clics en la flecha oculta */
-    transition: opacity 0.3s ease-in-out; /* Animación suave */
+    opacity: 0.2;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
 }
 
 @media (max-width: 768px)
@@ -184,45 +183,45 @@ html, body
         width: 30px;
         height: 30px;
     }
-    .caption {font-size: 18px;} /* Ajusta el tamaño de fuente para pantallas pequeñas */
-    .slider {max-width: 90%;} /* Ajusta el tamaño del slider para pantallas pequeñas */
+    .caption {font-size: 18px;}
+    .slider {max-width: 90%;}
 }
 
-/* Estilos para las bolitas (nav-dots) */
 .nav-dots
 {
-    position: absolute; /* Mantiene la relación con el slider */
-    bottom: 10px; /* Más cerca del slider */
-    left: 50%; /* Centrado horizontalmente */
-    transform: translateX(-50%); /* Ajuste preciso para centrar */
+    position: absolute; 
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    justify-content: center; /* Centra las bolitas dentro del contenedor */
+    justify-content: center; 
     align-items: center;
-    gap: 10px; /* Espaciado uniforme entre las bolitas */
-    background-color: white; /* Fondo blanco */
-    padding: 5px 15px; /* Espaciado interno */
-    border-radius: 10px; /* Bordes redondeados para un diseño suave */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade una sombra suave */
+    gap: 10px; 
+    background-color: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .nav-dots .dot
 {
     width: 12px;
     height: 12px;
-    background-color: rgba(0, 0, 0, 0.3); /* Color inicial de las bolitas */
-    border-radius: 50%; /* Forma redonda */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Animación suave */
+    background-color: rgba(0, 0, 0, 0.3); 
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .nav-dots .dot.active
 {
-    background-color: rgba(0, 0, 0, 0.7); /* Resalta la bolita activa */
-    transform: scale(1.2); /* Ampliación de la bolita activa */
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: scale(1.2);
 }
 
 .nav-dots .dot:hover
 {
-    background-color: rgba(0, 0, 0, 0.5); /* Resalta la bolita al pasar el mouse */
-    transform: scale(1.1); /* Efecto de zoom en hover */
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
+}
 }
