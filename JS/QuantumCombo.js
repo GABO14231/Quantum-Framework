@@ -75,8 +75,8 @@ export class QuantumCombo extends Quantum
         const value = this.getAttribute('master');
         if (value === 'true')
         {
-            if (this.props) this.addOption({ group: this.id, option: 'JS Master', value: 0, master: true });
-            else this.addOption({ group: this.id, option: 'HTML Master', value: 0, master: true, });
+            if (this.props) this.addOption({group: this.id, option: 'JS Master', value: 0, master: true});
+            else this.addOption({group: this.id, option: 'HTML Master', value: 0, master: true});
         }
     }
 
@@ -232,11 +232,7 @@ export class QuantumCombo extends Quantum
         this.#render(await this.#getCss());
         this.#applyProps();
         this.#checkAttributes();
-        if (this.getAttribute('master') === 'true')
-        {
-            if (this.props) this.addOption({group: this.id, option: 'JS Master', value: 0, master: true});
-            else this.addOption({group: this.id, option: 'HTML Master', value: 0, master: true});
-        }
+        this.#masterCheck();
         this.#events();
         this.built();
     }
