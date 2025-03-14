@@ -1,0 +1,69 @@
+.exchange-list-container
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 20px;
+}
+
+.list-container
+{
+    display: flex;
+    align-items: center;
+}
+
+.list
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    margin: 0 10px;
+}
+
+ul
+{
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+ul li
+{
+    padding: 5px;
+    margin: 2px 0;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+ul li.selected
+{
+    background: #cce5ff;
+    border: 1px solid #007bff;
+}
+
+input
+{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+button
+{
+    padding: 5px 10px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.controls button
+{
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 18px;
+    padding: 5px 10px;
+    margin: 5px;
+}

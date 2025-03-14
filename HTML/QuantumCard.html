@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () =>
+            {
+                const card1 = await quantum.createInstance("QuantumCard",
+                {
+                    id: 'CardJS',
+                    title: "JS Card",
+                    subtitle: "JavaScript Card",
+                    description: "This card was made with JavaScript",
+                    image: '../Images/image2.png'
+                });
+                card1.built = () => {console.log('Built Component!');};
+                card1.addToBody();
+            };
+        </script>
+        <quantum-card id="CardHTML" title="HTML Card" subtitle="HTML Card"
+            description="This card was created with HTML." image="../Images/image1.png"></quantum-card>
+    </body>
+</html>

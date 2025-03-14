@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quantum Menu Bar</title>
+    <script type="module" src="../JS/Quantum.js"></script>
+    <script type="module" src="../JS/QuantumMenuBar.js"></script>
+</head>
+<body>
+    <h1>Quantum Menu Bar</h1>
+
+    <quantum-menu-bar id="main-menu"></quantum-menu-bar>
+
+    <script>
+        const quantumInit = async () => {
+            const menuBar = document.getElementById('main-menu');
+
+            // Agregar elementos al menú dinámicamente
+            menuBar.addMenuItem("About Us");
+            menuBar.addMenuItem("Products", ["House", "Kitchen", "Bedroom", "Bathroom", "Compare"]);
+            menuBar.addMenuItem("Account", ["My Profile", "Payment Methods", "Order History"]);
+            menuBar.addMenuItem("Cart");
+        };
+
+        // Llamar a quantumInit cuando el DOM esté listo
+        document.addEventListener("DOMContentLoaded", quantumInit);
+    </script>
+</body>
+</html>
