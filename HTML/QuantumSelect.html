@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module" src="../JS/Quantum.js"></script>
+    </head>
+    <body>
+        <script>
+            const quantumInit = async () => {
+                const select = await quantum.createInstance("QuantumSelect", {
+                    id: 'jsSelect'
+                });
+
+                select.built = () => {
+                    quantum.show();
+                    console.log('Built Component!');
+                    select.addOption = ["Opción 1", "Opción 2", "Opción 3"];
+                };
+
+                quantum.addToBody(select);
+            };
+        </script>
+        <quantum-select addOption='["Opción 1", "Opción 2", "Opción 3", "Opción 4"]'></quantum-select>
+    </body>
+</html>
