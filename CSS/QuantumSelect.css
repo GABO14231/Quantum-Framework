@@ -1,0 +1,123 @@
+.QuantumSelectContainer {
+    position: relative;
+    width: 250px;
+    margin: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.QuantumSelectLabel {
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    background: #007bff;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+.QuantumSelect {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #ffffff;
+    border: 1px solid #0056b3;
+    border-radius: 8px;
+    background: #007bff;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.QuantumSelect:hover {
+    border-color: #003366;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.QuantumSelect:active,
+.QuantumSelect.active {
+    background: #0056b3;
+}
+
+.QuantumSelect .arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.QuantumSelectOptions {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #0056b3;
+    border-radius: 8px;
+    background: #0056b3;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    z-index: 3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.QuantumSelectOptions.open {
+    max-height: 200px;
+    opacity: 1;
+}
+
+.QuantumSelectOptions li {
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.QuantumSelectOptions.open li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.QuantumSelectOptions li:hover {
+    background: #003366;
+}
+
+.QuantumSelectOptions li:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.QuantumSelectOptions li:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.QuantumSelectOptions li:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.QuantumSelectOptions li:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.QuantumSelectOptions li:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+.QuantumSelectContainer.active .QuantumSelectLabel,
+.QuantumSelectContainer.has-value .QuantumSelectLabel {
+    opacity: 1;
+    color: #ffffff;
+}

@@ -25,9 +25,16 @@
                         submenu1: { // Submenú
                             title: "Submenú 1",
                             items: [
-                                { title: "Subopción 1" },
+                                { title: "Subopción 1", submenu: "subsubmenu1" },
                                 { title: "Subopción 2" }
                             ]
+                        },
+                        subsubmenu1: {
+                            title: "subsubmenu1",
+                            items: [
+                                { title: "subsubopcion 1" }, 
+                                { title: "subsubopcion 2"}
+                            ] 
                         }
                     }
                 });
@@ -54,8 +61,15 @@
             "submenu1": {
                 "title": "Submenú 1",
                 "items": [
-                    { "title": "Subopción 1" },
+                    { "title": "Subopción 1", "submenu": "subsubmenu1"},
                     { "title": "Subopción 2" }
+                ]
+            },
+            "subsubmenu1":{
+                "title": "subsubmenu1",
+                "items": [
+                    { "title": "subsubopcion1" },
+                    { "title": "subsubopcion2" }
                 ]
             }
         }'>
