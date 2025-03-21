@@ -1,4 +1,4 @@
-export class QuantumSelect extends HTMLElement {
+export class QuantumSelect extends Quantum {
     constructor() {
         super();
         this.name = "QuantumSelect";
